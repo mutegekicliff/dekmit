@@ -1,0 +1,1880 @@
+:root {
+  /* FreshDirect Signature Palette */
+  --fd-green-dark: #004d25;
+  --fd-green-primary: #006837;
+  --fd-green-bright: #43b02a;
+  --fd-green-tint: #ebf7ee;
+  --fd-orange-cta: #ff6b00;
+  --fd-orange-hover: #e05e00;
+  --fd-amber-badge: #fef3c7;
+  --fd-amber-text: #92400e;
+
+  --fd-bg-page: #f7f8f6;
+  --fd-bg-white: #ffffff;
+  --fd-bg-subtle: #eff2ee;
+
+  --fd-text-main: #1b241e;
+  --fd-text-muted: #5a665e;
+  --fd-border: #e1e6df;
+  --fd-border-strong: #c5cfc2;
+
+  --fd-radius-xs: 6px;
+  --fd-radius-sm: 10px;
+  --fd-radius-md: 14px;
+  --fd-radius-lg: 20px;
+  --fd-radius-pill: 9999px;
+
+  --fd-shadow-card: 0 2px 8px rgba(0, 45, 20, 0.05);
+  --fd-shadow-hover: 0 10px 24px rgba(0, 45, 20, 0.11);
+  --fd-shadow-modal: 0 24px 48px rgba(0, 30, 14, 0.22);
+
+  --fd-font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fd-font-serif: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fd-font-sans);
+  font-size-adjust: from-font;
+  background-color: var(--fd-bg-page);
+  color: var(--fd-text-main);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fd-container {
+  width: 100%;
+  max-width: 1380px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* 1. FreshDirect Top Utility & Delivery Slot Bar */
+.fd-utility-bar {
+  background-color: var(--fd-green-dark);
+  color: #ffffff;
+  font-size: 0.8rem;
+  padding-block: 0.42rem;
+}
+
+.fd-utility-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.fd-slot-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--fd-radius-pill);
+  font-family: inherit;
+  font-size: 0.79rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fd-slot-pill:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.fd-slot-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
+}
+
+.fd-slot-pill__divider {
+  opacity: 0.4;
+}
+
+.fd-slot-pill__change {
+  color: #fde68a;
+  font-weight: 700;
+  margin-left: 0.25rem;
+}
+
+.fd-utility-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.fd-utility-promo {
+  color: #dcfce7;
+}
+
+@media (max-width: 900px) {
+  .fd-utility-promo {
+    display: none;
+  }
+}
+
+.fd-utility-link {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--fd-radius-pill);
+  font-family: inherit;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.fd-utility-link:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* 2. Sticky FreshDirect Header */
+.fd-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--fd-bg-white);
+  border-bottom: 1px solid var(--fd-border);
+  box-shadow: 0 4px 14px rgba(0, 40, 18, 0.06);
+}
+
+.fd-header__main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.fd-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.fd-brand__mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--fd-green-primary), var(--fd-green-bright));
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 104, 55, 0.22);
+}
+
+.fd-brand__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.fd-brand__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fd-green-primary);
+}
+
+.fd-brand__direct {
+  color: var(--fd-orange-cta);
+  font-weight: 800;
+}
+
+.fd-brand__sub {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--fd-text-muted);
+  letter-spacing: 0.02em;
+  margin-top: 0.15rem;
+}
+
+/* Centered Search Bar */
+.fd-search {
+  flex: 1;
+  max-width: 620px;
+  min-width: 250px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fd-search__icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--fd-green-primary);
+  pointer-events: none;
+}
+
+.fd-search__input {
+  width: 100%;
+  padding: 0.72rem 4.2rem 0.72rem 2.85rem;
+  border-radius: var(--fd-radius-pill);
+  border: 2px solid var(--fd-border-strong);
+  background-color: var(--fd-bg-page);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--fd-text-main);
+  transition: all 0.18s ease;
+}
+
+.fd-search__input:focus {
+  outline: none;
+  background-color: var(--fd-bg-white);
+  border-color: var(--fd-green-primary);
+  box-shadow: 0 0 0 4px rgba(0, 104, 55, 0.12);
+}
+
+.fd-search__clear {
+  position: absolute;
+  right: 2.6rem;
+  border: none;
+  background: var(--fd-border);
+  color: var(--fd-text-main);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.fd-search__kbd {
+  position: absolute;
+  right: 0.95rem;
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border-strong);
+  border-radius: 5px;
+  padding: 0.08rem 0.42rem;
+  font-size: 0.72rem;
+  color: var(--fd-text-muted);
+  pointer-events: none;
+}
+
+/* Header Right Actions */
+.fd-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fd-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--fd-radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: var(--fd-text-main);
+}
+
+.fd-action-link:hover {
+  background-color: var(--fd-bg-subtle);
+}
+
+.fd-action-link.is-active {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.fd-action-link__icon {
+  font-size: 1.35rem;
+  color: var(--fd-orange-cta);
+}
+
+.fd-action-link__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.fd-action-link__text small {
+  font-size: 0.68rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-action-link__text strong {
+  font-size: 0.82rem;
+}
+
+.fd-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--fd-orange-cta);
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--fd-radius-pill);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.28);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.fd-cart-btn:hover {
+  background-color: var(--fd-orange-hover);
+  transform: translateY(-1px);
+}
+
+.fd-cart-btn__badge {
+  background-color: #ffffff;
+  color: var(--fd-orange-cta);
+  font-size: 0.78rem;
+  font-weight: 800;
+  min-width: 24px;
+  height: 24px;
+  border-radius: var(--fd-radius-pill);
+  display: grid;
+  place-items: center;
+  padding-inline: 0.35rem;
+}
+
+/* 3. FreshDirect Department Navigation Bar */
+.fd-dept-nav {
+  background-color: var(--fd-bg-white);
+  border-top: 1px solid var(--fd-border);
+}
+
+.fd-dept-nav__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 0.35rem;
+}
+
+.fd-dept-nav__inner::-webkit-scrollbar {
+  display: none;
+}
+
+.fd-dept-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.48rem 0.9rem;
+  border-radius: var(--fd-radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--fd-text-main);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fd-dept-link:hover {
+  background-color: var(--fd-green-tint);
+  color: var(--fd-green-primary);
+}
+
+.fd-dept-link.is-active {
+  background-color: var(--fd-green-primary);
+  color: #ffffff;
+}
+
+.fd-dept-link--highlight {
+  color: var(--fd-amber-text);
+  background-color: var(--fd-amber-badge);
+}
+
+.fd-dept-link--highlight.is-active {
+  background-color: var(--fd-orange-cta);
+  color: #ffffff;
+}
+
+.fd-dept-count {
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+/* 4. FreshDirect Split Editorial Hero */
+.fd-hero {
+  padding-top: 1.4rem;
+  padding-bottom: 1rem;
+}
+
+.fd-hero__grid {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 1.15rem;
+}
+
+@media (max-width: 980px) {
+  .fd-hero__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fd-hero-main {
+  background: linear-gradient(125deg, #004d25 0%, #006837 60%, #15803d 100%);
+  color: #ffffff;
+  border-radius: var(--fd-radius-lg);
+  padding: 2.25rem;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: var(--fd-shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 680px) {
+  .fd-hero-main {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+}
+
+.fd-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.16);
+  color: #bbf7d0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 0.28rem 0.7rem;
+  border-radius: var(--fd-radius-pill);
+  margin-bottom: 0.85rem;
+}
+
+.fd-hero-main__title {
+  font-family: var(--fd-font-serif);
+  font-size: clamp(1.75rem, 2.8vw, 2.45rem);
+  line-height: 1.12;
+  margin-bottom: 0.85rem;
+}
+
+.fd-hero-main__desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.4rem;
+}
+
+.fd-hero-main__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.fd-visual-collage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.fd-Visual-bubble {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--fd-text-main);
+  border-radius: var(--fd-radius-md);
+  padding: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.fd-hero-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.fd-Visual-bubble span {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.fd-Visual-bubble small {
+  color: var(--fd-green-primary);
+  font-weight: 800;
+}
+
+.fd-hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.fd-promo-box {
+  flex: 1;
+  border-radius: var(--fd-radius-lg);
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--fd-border);
+}
+
+.fd-promo-box--amber {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fde68a;
+}
+
+.fd-promo-box--blue {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #bae6fd;
+}
+
+.fd-promo-box__tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--fd-text-muted);
+}
+
+.fd-promo-box__title {
+  font-family: var(--fd-font-serif);
+  font-size: 1.22rem;
+  margin-block: 0.3rem;
+  color: var(--fd-text-main);
+}
+
+.fd-promo-box__text {
+  font-size: 0.83rem;
+  color: var(--fd-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.fd-link-btn {
+  align-self: flex-start;
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border-strong);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--fd-radius-pill);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--fd-green-primary);
+  cursor: pointer;
+}
+
+.fd-link-btn:hover {
+  background: var(--fd-green-primary);
+  color: #fff;
+  border-color: var(--fd-green-primary);
+}
+
+/* 5. Circular Department Medallions (FreshDirect Icon Grid) */
+.fd-circles-section {
+  padding-block: 1.5rem;
+}
+
+.fd-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fd-section-head__title {
+  font-family: var(--fd-font-serif);
+  font-size: 1.4rem;
+  color: var(--fd-text-main);
+}
+
+.fd-section-head__sub {
+  font-size: 0.84rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-section-head__link {
+  background: none;
+  border: none;
+  color: var(--fd-green-primary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fd-section-head__link:hover {
+  text-decoration: underline;
+}
+
+.fd-circles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
+  gap: 0.85rem;
+}
+
+.fd-circle-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0.35rem;
+  transition: transform 0.16s ease;
+}
+
+.fd-circle-card:hover {
+  transform: translateY(-4px);
+}
+
+.fd-circle-card__avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background-color: var(--circle-bg, #ebf7ee);
+  border: 2px solid var(--fd-bg-white);
+  box-shadow: 0 4px 12px rgba(0, 40, 18, 0.08);
+  display: grid;
+  place-items: center;
+  font-size: 2.1rem;
+  overflow: hidden;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.fd-circle-card__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fd-circle-card:hover .fd-circle-card__avatar {
+  border-color: var(--fd-green-primary);
+  box-shadow: 0 6px 16px rgba(0, 104, 55, 0.18);
+}
+
+.fd-circle-card__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--fd-text-main);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* 6. FreshDirect Horizontal Product Carousels */
+.fd-carousel-block {
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border);
+  border-radius: var(--fd-radius-lg);
+  padding: 1.35rem 1.4rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--fd-shadow-card);
+}
+
+.fd-carousel-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 224px;
+  gap: 0.95rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.fd-carousel-track > * {
+  scroll-snap-align: start;
+}
+
+/* 7. FreshDirect Product Card */
+.fd-card {
+  background-color: var(--fd-bg-white);
+  border: 1px solid var(--fd-border);
+  border-radius: var(--fd-radius-md);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: box-shadow 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.fd-card:hover {
+  box-shadow: var(--fd-shadow-hover);
+  border-color: var(--fd-border-strong);
+  transform: translateY(-2px);
+}
+
+.fd-card--new {
+  border-color: #fcd34d;
+}
+
+.fd-card__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.fd-card__tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+
+.fd-tag {
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 0.14rem 0.45rem;
+  border-radius: var(--fd-radius-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.fd-tag--new {
+  background-color: #f59e0b;
+  color: #111827;
+}
+
+.fd-tag--code {
+  background-color: var(--fd-bg-subtle);
+  color: var(--fd-text-muted);
+}
+
+.fd-card__fav {
+  border: none;
+  background: var(--fd-bg-page);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--fd-text-muted);
+  display: grid;
+  place-items: center;
+}
+
+.fd-card__fav.is-fav {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Visual Stage inside Product Card */
+.fd-card__visual {
+  height: 146px;
+  border-radius: var(--fd-radius-sm);
+  background: radial-gradient(circle at center, var(--stage-tint, #f4f7f4) 0%, #fafbfa 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 0.65rem;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.fd-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.28s ease;
+}
+
+.fd-card:hover .fd-card__img {
+  transform: scale(1.06);
+}
+
+.fd-card__emoji {
+  font-size: 3.1rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.08));
+  transition: transform 0.2s ease;
+}
+
+.fd-card:hover .fd-card__emoji {
+  transform: scale(1.08);
+}
+
+.fd-table-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  border: 1px solid var(--fd-border);
+}
+
+.fd-cart-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--fd-border);
+}
+
+.fd-detail-banner {
+  width: 100%;
+  height: 210px;
+  border-radius: var(--fd-radius-md);
+  object-fit: cover;
+  margin-bottom: 0.9rem;
+  border: 1px solid var(--fd-border);
+}
+
+/* FreshDirect Leaf Rating & Shelf-Life Pill on Image Corner */
+.fd-card__freshness {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--fd-radius-pill);
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--fd-green-primary);
+  border: 1px solid rgba(0, 104, 55, 0.15);
+}
+
+.fd-card__storage-pill {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 0.63rem;
+  font-weight: 700;
+  padding: 0.1rem 0.42rem;
+  border-radius: var(--fd-radius-pill);
+}
+
+.st-humid { background: #dcfce7; color: #166534; }
+.st-chilled { background: #e0f2fe; color: #075985; }
+.st-frozen { background: #cffafe; color: #155e75; }
+.st-dry { background: #f5f5f4; color: #44403c; }
+.st-ambient { background: #fef3c7; color: #92400e; }
+
+.fd-card__body {
+  margin-bottom: 0.7rem;
+}
+
+.fd-card__dept {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--fd-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.fd-card__title {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--fd-text-main);
+  line-height: 1.25;
+  margin-block: 0.15rem;
+  cursor: pointer;
+}
+
+.fd-card__title:hover {
+  color: var(--fd-green-primary);
+}
+
+.fd-card__uom {
+  font-size: 0.76rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--fd-bg-subtle);
+}
+
+.fd-card__price {
+  font-size: 1.04rem;
+  font-weight: 800;
+  color: var(--fd-text-main);
+}
+
+.fd-card__unit-sub {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--fd-text-muted);
+  font-weight: 500;
+}
+
+/* FreshDirect "+ Add" Green Pill & Stepper */
+.fd-add-btn {
+  background-color: var(--fd-green-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--fd-radius-pill);
+  padding: 0.42rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.fd-add-btn:hover {
+  background-color: var(--fd-green-dark);
+}
+
+.fd-stepper {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--fd-green-dark);
+  color: #ffffff;
+  border-radius: var(--fd-radius-pill);
+  overflow: hidden;
+}
+
+.fd-stepper__btn {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  width: 28px;
+  height: 30px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fd-stepper__btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.fd-stepper__val {
+  min-width: 22px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+/* 8. Department Aisle & Sidebar Layout (FreshDirect Browse Experience) */
+.fd-aisle-section {
+  padding-top: 1rem;
+  padding-bottom: 3.5rem;
+}
+
+.fd-aisle-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.fd-aisle-header__crumb {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--fd-green-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.fd-aisle-header__title {
+  font-family: var(--fd-font-serif);
+  font-size: 1.65rem;
+  color: var(--fd-text-main);
+}
+
+.fd-aisle-layout {
+  display: grid;
+  grid-template-columns: 265px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .fd-aisle-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fd-sidebar {
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border);
+  border-radius: var(--fd-radius-md);
+  padding: 1.1rem;
+  position: sticky;
+  top: 122px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+@media (max-width: 960px) {
+  .fd-sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+.fd-sidebar__block + .fd-sidebar__block {
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--fd-border);
+}
+
+.fd-sidebar__title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fd-text-muted);
+  margin-bottom: 0.65rem;
+}
+
+.fd-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.fd-aisle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  padding: 0.42rem 0.6rem;
+  border-radius: var(--fd-radius-xs);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--fd-text-main);
+  cursor: pointer;
+}
+
+.fd-aisle-btn:hover {
+  background-color: var(--fd-bg-subtle);
+}
+
+.fd-aisle-btn.is-active {
+  background-color: var(--fd-green-tint);
+  color: var(--fd-green-primary);
+  font-weight: 800;
+}
+
+.fd-radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.fd-radio-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fd-radio-item input {
+  accent-color: var(--fd-green-primary);
+}
+
+/* Right Aisle Content & Control Bar */
+.fd-control-bar {
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border);
+  border-radius: var(--fd-radius-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.fd-control-bar__summary {
+  font-size: 0.86rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-control-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fd-sort-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--fd-text-muted);
+}
+
+.fd-select {
+  padding: 0.38rem 0.65rem;
+  border-radius: var(--fd-radius-xs);
+  border: 1px solid var(--fd-border-strong);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background-color: var(--fd-bg-white);
+}
+
+.fd-view-switch {
+  display: inline-flex;
+  border: 1px solid var(--fd-border-strong);
+  border-radius: var(--fd-radius-xs);
+  overflow: hidden;
+}
+
+.fd-view-btn {
+  border: none;
+  background: var(--fd-bg-white);
+  padding: 0.38rem 0.7rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--fd-text-muted);
+  cursor: pointer;
+}
+
+.fd-view-btn.is-active {
+  background: var(--fd-green-primary);
+  color: #ffffff;
+}
+
+/* Section Shelf Blocks & Deferred Rendering */
+.fd-shelf-section {
+  margin-bottom: 2.2rem;
+}
+
+.fd-shelf-section.is-below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 480px;
+}
+
+.fd-shelf-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid var(--fd-border);
+}
+
+.fd-shelf-header__title {
+  font-family: var(--fd-font-serif);
+  font-size: 1.25rem;
+  color: var(--fd-green-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fd-shelf-header__badge {
+  font-family: var(--fd-font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: var(--fd-green-tint);
+  color: var(--fd-green-primary);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--fd-radius-xs);
+}
+
+.fd-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 0.95rem;
+}
+
+/* Spreadsheet Table View */
+.fd-table-wrap {
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border);
+  border-radius: var(--fd-radius-md);
+  overflow-x: auto;
+}
+
+.fd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+.fd-table th,
+.fd-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.fd-table th {
+  background: var(--fd-bg-subtle);
+  font-weight: 800;
+  color: var(--fd-green-dark);
+  white-space: nowrap;
+}
+
+.fd-table tr.row--new {
+  background-color: #fffbeb;
+}
+
+/* Buttons */
+.fd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.68rem 1.25rem;
+  border-radius: var(--fd-radius-pill);
+  border: none;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fd-btn--orange {
+  background-color: var(--fd-orange-cta);
+  color: #ffffff;
+}
+
+.fd-btn--orange:hover {
+  background-color: var(--fd-orange-hover);
+}
+
+.fd-btn--green {
+  background-color: var(--fd-green-primary);
+  color: #ffffff;
+}
+
+.fd-btn--green:hover {
+  background-color: var(--fd-green-dark);
+}
+
+.fd-btn--white {
+  background-color: #ffffff;
+  color: var(--fd-green-dark);
+}
+
+.fd-btn--white:hover {
+  background-color: #f0fdf4;
+}
+
+.fd-btn--outline-sm {
+  background: var(--fd-bg-white);
+  border: 1px solid var(--fd-border-strong);
+  color: var(--fd-text-main);
+  padding: 0.36rem 0.75rem;
+  font-size: 0.78rem;
+}
+
+.fd-btn--outline-sm:hover {
+  border-color: var(--fd-green-primary);
+  color: var(--fd-green-primary);
+}
+
+.fd-btn--full {
+  width: 100%;
+}
+
+/* Guarantees Banner */
+.fd-guarantees {
+  background: var(--fd-bg-white);
+  border-top: 1px solid var(--fd-border);
+  border-bottom: 1px solid var(--fd-border);
+  padding-block: 2.25rem;
+}
+
+.fd-guarantees__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.fd-guarantee-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.fd-guarantee-item__icon {
+  font-size: 1.85rem;
+  background: var(--fd-green-tint);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.fd-guarantee-item h3 {
+  font-size: 0.92rem;
+  margin-bottom: 0.2rem;
+}
+
+.fd-guarantee-item p {
+  font-size: 0.8rem;
+  color: var(--fd-text-muted);
+}
+
+/* Footer */
+.fd-footer {
+  background-color: var(--fd-green-dark);
+  color: rgba(255, 255, 255, 0.86);
+  padding-top: 2.75rem;
+}
+
+.fd-footer__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 2rem;
+  padding-bottom: 2.25rem;
+}
+
+@media (max-width: 820px) {
+  .fd-footer__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fd-brand--footer .fd-brand__title {
+  color: #ffffff;
+}
+
+.fd-brand--footer .fd-brand__sub {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.fd-footer__text {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  max-width: 42ch;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.fd-footer__heading {
+  color: #fde68a;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.fd-footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.83rem;
+}
+
+.fd-footer__links a,
+.fd-footer__btn-link {
+  color: rgba(255, 255, 255, 0.86);
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.fd-footer__links a:hover,
+.fd-footer__btn-link:hover {
+  color: #fde68a;
+  text-decoration: underline;
+}
+
+.fd-footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-block: 1.1rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Native Dialog Modals */
+.fd-modal {
+  border: none;
+  padding: 0;
+  background: var(--fd-bg-white);
+  color: var(--fd-text-main);
+  box-shadow: var(--fd-shadow-modal);
+}
+
+.fd-modal::backdrop {
+  background: rgba(0, 28, 14, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.fd-modal--drawer {
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  width: min(470px, 100vw);
+  height: 100dvh;
+  max-height: 100dvh;
+  border-radius: var(--fd-radius-lg) 0 0 var(--fd-radius-lg);
+}
+
+.fd-modal--center {
+  margin: auto;
+  width: min(560px, 92vw);
+  border-radius: var(--fd-radius-lg);
+}
+
+.fd-modal__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: inherit;
+}
+
+.fd-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.35rem;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.fd-modal__title {
+  font-family: var(--fd-font-serif);
+  font-size: 1.22rem;
+  color: var(--fd-green-dark);
+}
+
+.fd-modal__subtitle {
+  font-size: 0.78rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-modal__close {
+  border: none;
+  background: var(--fd-bg-subtle);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.fd-modal__body {
+  padding: 1.1rem 1.35rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.fd-modal__footer {
+  padding: 1rem 1.35rem 1.25rem;
+  border-top: 1px solid var(--fd-border);
+  background: var(--fd-bg-page);
+}
+
+/* Free Eco Bag Progress Bar inside Cart */
+.fd-free-progress {
+  background: var(--fd-green-tint);
+  padding: 0.65rem 1.35rem;
+  border-bottom: 1px solid #bbf7d0;
+  font-size: 0.78rem;
+}
+
+.fd-free-progress__bar {
+  height: 7px;
+  background: #dcfce7;
+  border-radius: var(--fd-radius-pill);
+  overflow: hidden;
+  margin-top: 0.35rem;
+}
+
+.fd-free-progress__fill {
+  height: 100%;
+  background: var(--fd-green-bright);
+  transition: width 0.25s ease;
+}
+
+.fd-eco-upsell {
+  margin-inline: 1.35rem;
+  margin-bottom: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  background: #fffbeb;
+  border: 1px dashed #f59e0b;
+  border-radius: var(--fd-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.76rem;
+}
+
+.fd-eco-upsell__info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fd-cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block: 0.65rem;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.fd-cart-totals {
+  font-size: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.fd-cart-totals__row {
+  display: flex;
+  justify-content: space-between;
+  padding-block: 0.2rem;
+}
+
+.fd-cart-totals__row--grand {
+  font-size: 1.04rem;
+  padding-top: 0.45rem;
+  margin-top: 0.3rem;
+  border-top: 1px solid var(--fd-border-strong);
+  color: var(--fd-green-dark);
+}
+
+.fd-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+@media (max-width: 480px) {
+  .fd-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+
+.fd-field input,
+.fd-field select,
+.fd-select-lg {
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--fd-radius-xs);
+  border: 1px solid var(--fd-border-strong);
+  font-family: inherit;
+  font-size: 0.83rem;
+  background: #fff;
+}
+
+.fd-checkout-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.fd-btn-clear {
+  border: none;
+  background: none;
+  color: var(--fd-text-muted);
+  font-size: 0.76rem;
+  cursor: pointer;
+  text-decoration: underline;
+  align-self: center;
+}
+
+/* Delivery Time Slot Modal Grid */
+.fd-field-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.fd-slot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.fd-slot-option {
+  border: 1.5px solid var(--fd-border-strong);
+  background: var(--fd-bg-page);
+  border-radius: var(--fd-radius-sm);
+  padding: 0.75rem;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fd-slot-option.is-selected {
+  border-color: var(--fd-green-primary);
+  background: var(--fd-green-tint);
+}
+
+.fd-slot-option strong {
+  font-size: 0.85rem;
+  color: var(--fd-green-dark);
+}
+
+.fd-slot-option span {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.fd-slot-option small {
+  font-size: 0.7rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-modal--wide {
+  margin: auto;
+  width: min(860px, 95vw);
+  max-height: 90dvh;
+  border-radius: var(--fd-radius-lg);
+}
+
+.fd-pricing-section {
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.fd-pricing-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.fd-pricing-section__title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--fd-green-dark);
+  margin-bottom: 0.6rem;
+}
+
+.fd-pricing-section__desc {
+  font-size: 0.8rem;
+  color: var(--fd-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.fd-pricing-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+.fd-mode-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  background: var(--fd-bg-page);
+  border: 1.5px solid var(--fd-border);
+  border-radius: var(--fd-radius-sm);
+  padding: 0.75rem;
+  cursor: pointer;
+}
+
+.fd-mode-card:has(input:checked) {
+  border-color: var(--fd-green-primary);
+  background: var(--fd-green-tint);
+}
+
+.fd-mode-card input {
+  margin-top: 0.2rem;
+  accent-color: var(--fd-green-primary);
+}
+
+.fd-mode-card strong {
+  display: block;
+  font-size: 0.82rem;
+  margin-bottom: 0.2rem;
+}
+
+.fd-mode-card p {
+  font-size: 0.72rem;
+  color: var(--fd-text-muted);
+  line-height: 1.35;
+}
+
+.fd-sync-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.fd-sync-input {
+  flex: 1;
+  min-width: 240px;
+  padding: 0.58rem 0.85rem;
+  border-radius: var(--fd-radius-pill);
+  border: 1.5px solid var(--fd-border-strong);
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+
+.fd-sync-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.fd-sync-status {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--fd-green-primary);
+}
+
+.fd-quick-search {
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--fd-radius-pill);
+  border: 1px solid var(--fd-border-strong);
+  font-family: inherit;
+  font-size: 0.8rem;
+  width: min(320px, 100%);
+}
+
+.fd-quick-editor-wrap {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid var(--fd-border);
+  border-radius: var(--fd-radius-sm);
+}
+
+.fd-quick-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.fd-quick-table th,
+.fd-quick-table td {
+  padding: 0.48rem 0.65rem;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.fd-quick-table th {
+  position: sticky;
+  top: 0;
+  background: var(--fd-bg-subtle);
+  font-weight: 800;
+  z-index: 2;
+}
+
+.fd-price-input {
+  width: 96px;
+  padding: 0.28rem 0.45rem;
+  border: 1px solid var(--fd-border-strong);
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.fd-stock-select {
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--fd-border-strong);
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.fd-card--out {
+  opacity: 0.62;
+}
+
+.fd-tag--out {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.fd-tag--seasonal {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.fd-margin-box {
+  background: var(--fd-bg-page);
+  border: 1px solid var(--fd-border);
+  padding: 1rem;
+  border-radius: var(--fd-radius-sm);
+}
+
+/* Toast */
+.fd-toast-container {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.fd-toast {
+  background: var(--fd-green-dark);
+  color: #ffffff;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--fd-radius-pill);
+  font-size: 0.83rem;
+  font-weight: 700;
+  box-shadow: var(--fd-shadow-hover);
+}
+
