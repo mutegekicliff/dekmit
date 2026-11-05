@@ -320,8 +320,8 @@
     }
 
     const visualMedia = p.image
-      ? `<img src="${p.image}" alt="${p.name}" class="fd-card__img" width="220" height="155" ${imgAttrs} onerror="window.handleCardImgError(this)">`
-      : `<span class="fd-card__flat-fallback">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--xl') : ''}</span>`;
+      ? `<img src="${p.image}" alt="${p.name}" class="fd-card__img" width="200" height="135" ${imgAttrs} onerror="window.handleCardImgError(this)">`
+      : `<span class="fd-card__flat-fallback">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--lg') : ''}</span>`;
 
     const minusIcon = window.getFlatIcon ? window.getFlatIcon('minus', 'fd-icon--sm') : '−';
     const plusIcon = window.getFlatIcon ? window.getFlatIcon('plus', 'fd-icon--sm') : '+';
@@ -331,7 +331,7 @@
 
     let actionHtml = '';
     if (isOut) {
-      actionHtml = `<span class="fd-tag fd-tag--out">Out of Stock</span>`;
+      actionHtml = `<span class="fd-tag fd-tag--out">Out</span>`;
     } else if (qty > 0) {
       actionHtml = `<div class="fd-stepper" aria-label="Quantity in bag">
         <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}" aria-label="Decrease">${minusIcon}</button>
@@ -346,31 +346,24 @@
     const isWed = isWednesdayDiscountActive();
     const priceDisplayHtml = isWed
       ? `<div class="fd-card__price-box">
-          <div class="fd-card__price-main">
-            <span class="fd-card__price-orig">${formatUGX(basePrice)}</span>
-            <span class="fd-card__price fd-card__price--sale">${formatUGX(sellPrice)}</span>
-            <span class="fd-card__unit-sub">/${p.uom}</span>
-          </div>
-          <span class="fd-tag-wed-sale">50% OFF</span>
+          <span class="fd-card__price-orig">${formatUGX(basePrice)}</span>
+          <span class="fd-card__price fd-card__price--sale">${formatUGX(sellPrice)}<small class="fd-card__unit">/${p.uom}</small></span>
         </div>`
-      : `<div>
-          <span class="fd-card__price">${formatUGX(sellPrice)}</span>
-          <span class="fd-card__unit-sub">/${p.uom}</span>
+      : `<div class="fd-card__price-box">
+          <span class="fd-card__price">${formatUGX(sellPrice)}<small class="fd-card__unit">/${p.uom}</small></span>
         </div>`;
 
-    // Clean, minimalist subtitle
-    let subtitle = `Per ${p.uom}`;
-    if (p.variant) {
-      if (p.variant.toLowerCase().includes(p.uom.toLowerCase())) {
-        subtitle = p.variant;
-      } else {
-        subtitle = `${p.variant} · Per ${p.uom}`;
-      }
+    // Only show variant if it contains distinct information not already in the unit
+    let variantHtml = '';
+    if (p.variant && p.variant.trim() && p.variant.trim().toLowerCase() !== p.uom.trim().toLowerCase()) {
+      variantHtml = `<p class="fd-card__variant">${p.variant}</p>`;
     }
 
-    // Minimal single tag
+    // Floating micro-badge overlay on image (only when active)
     let tagHtml = '';
-    if (isNew) {
+    if (isWed) {
+      tagHtml = `<span class="fd-tag fd-tag--sale">50% OFF</span>`;
+    } else if (isNew) {
       tagHtml = `<span class="fd-tag fd-tag--new">New</span>`;
     } else if (stockSt === 'Seasonal') {
       tagHtml = `<span class="fd-tag fd-tag--seasonal">Seasonal</span>`;
@@ -378,25 +371,17 @@
 
     return `
       <article class="fd-card ${isNew ? 'fd-card--new' : ''} ${isOut ? 'fd-card--out' : ''}" data-product-code="${p.code}">
-        <div>
-          <div class="fd-card__top-bar">
-            <div class="fd-card__tag-group">
-              ${tagHtml}
-            </div>
-            <button type="button" class="fd-card__fav ${isFav ? 'is-fav' : ''}" data-fav-code="${p.code}" title="Save to My Lists" aria-label="Save ${p.name} to My Lists">
-              ${favIcon}
-            </button>
-          </div>
+        <div class="fd-card__visual" data-detail-code="${p.code}">
+          ${tagHtml}
+          <button type="button" class="fd-card__fav ${isFav ? 'is-fav' : ''}" data-fav-code="${p.code}" title="Save to My Lists" aria-label="Save ${p.name} to My Lists">
+            ${favIcon}
+          </button>
+          ${visualMedia}
+        </div>
 
-          <div class="fd-card__visual" data-detail-code="${p.code}">
-            ${visualMedia}
-          </div>
-
-          <div class="fd-card__body">
-            <div class="fd-card__dept">${p.section}</div>
-            <h3 class="fd-card__title" data-detail-code="${p.code}">${p.name}</h3>
-            <p class="fd-card__uom">${subtitle}</p>
-          </div>
+        <div class="fd-card__body">
+          <h3 class="fd-card__title" data-detail-code="${p.code}">${p.name}</h3>
+          ${variantHtml}
         </div>
 
         <div class="fd-card__footer">
