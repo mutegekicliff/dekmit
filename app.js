@@ -460,7 +460,7 @@
       const activeCls = state.sectionCode === code ? 'is-active' : '';
       html += `
         <button type="button" class="fd-aisle-btn ${activeCls}" data-section-btn="${code}">
-          <span>${code} ${meta.section}</span>
+          <span>${meta.section}</span>
           <span>${count}</span>
         </button>
       `;
@@ -525,7 +525,7 @@
 
     const secTitle =
       state.sectionCode !== 'all' && sectionsMeta[state.sectionCode]
-        ? `Aisle ${state.sectionCode}: ${sectionsMeta[state.sectionCode].section}`
+        ? sectionsMeta[state.sectionCode].section
         : deptTitles[state.dept] || 'Store Catalogue';
 
     aisleHeading.textContent = state.search.trim()
@@ -534,7 +534,7 @@
 
     aisleBreadcrumb.textContent =
       state.sectionCode !== 'all'
-        ? `Dek Mit Direct › ${sectionsMeta[state.sectionCode]?.zone} › Section ${state.sectionCode}`
+        ? `Dek Mit Direct › ${sectionsMeta[state.sectionCode]?.zone} › ${sectionsMeta[state.sectionCode]?.section}`
         : `Dek Mit Direct › ${deptTitles[state.dept] || 'All Departments'}`;
 
     const filtered = getFilteredProducts();
@@ -658,10 +658,9 @@
         secIdx++;
 
         html += `
-          <section class="fd-shelf-section ${belowFoldClass}" aria-label="Section ${secCode} ${meta.section}">
+          <section class="fd-shelf-section ${belowFoldClass}" aria-label="${meta.section}">
             <header class="fd-shelf-header">
               <h3 class="fd-shelf-header__title">
-                <span class="fd-shelf-header__badge">Aisle ${secCode}</span>
                 <span>${meta.section}</span>
               </h3>
               <span style="font-size:0.78rem;color:var(--fd-text-muted);">${items.length} item${items.length === 1 ? '' : 's'}</span>
@@ -797,7 +796,7 @@
           <span class="fd-tag ${p.status === 'NEW' ? 'fd-tag--new' : 'fd-tag--code'}">
             ${p.status === 'NEW' ? `${sparklesIcon} NEW Suggested Addition` : 'Survey Catalogue Item'}
           </span>
-          <span class="fd-tag fd-tag--code">Aisle ${p.sectionCode}: ${p.section}</span>
+          <span class="fd-tag fd-tag--code">${p.section}</span>
           <span class="fd-tag ${st.cls}">${stIcon} ${p.storage}</span>
         </div>
 
