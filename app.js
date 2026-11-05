@@ -224,18 +224,18 @@
   // Storage Badge & Stage Tint Helper
   function getStorageInfo(storage) {
     if (storage.includes('Humidified')) {
-      return { cls: 'st-humid', short: '💧 Misted', tint: '#ecfdf5' };
+      return { cls: 'st-humid', icon: 'droplet', short: 'Misted', tint: '#ecfdf5' };
     }
     if (storage.includes('Chilled')) {
-      return { cls: 'st-chilled', short: '❄️ 2–5°C', tint: '#f0f9ff' };
+      return { cls: 'st-chilled', icon: 'snowflake', short: '2–5°C', tint: '#f0f9ff' };
     }
     if (storage.includes('Frozen')) {
-      return { cls: 'st-frozen', short: '🧊 ≤-18°C', tint: '#ecfeff' };
+      return { cls: 'st-frozen', icon: 'ice', short: '≤-18°C', tint: '#ecfeff' };
     }
     if (storage.includes('Dry')) {
-      return { cls: 'st-dry', short: '🏺 Pantry', tint: '#fafaf9' };
+      return { cls: 'st-dry', icon: 'box', short: 'Pantry', tint: '#fafaf9' };
     }
-    return { cls: 'st-ambient', short: '☀️ Fresh', tint: '#fffbeb' };
+    return { cls: 'st-ambient', icon: 'sun', short: 'Fresh', tint: '#fffbeb' };
   }
 
   // Mandatory Light-Dismiss Fallback for <dialog closedby="any">
@@ -308,21 +308,32 @@
       imgAttrs = opts.index >= 4 ? 'fetchpriority="low" loading="lazy"' : '';
     }
 
+    const fallbackIcon = `<span class="fd-card__flat-fallback">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--xl') : ''}</span>`;
     const visualMedia = p.image
-      ? `<img src="${p.image}" alt="${p.name}" class="fd-card__img" width="220" height="146" ${imgAttrs} onerror="this.outerHTML='<span class=\\'fd-card__emoji\\'>${p.emoji}</span>'">`
-      : `<span class="fd-card__emoji" aria-hidden="true">${p.emoji}</span>`;
+      ? `<img src="${p.image}" alt="${p.name}" class="fd-card__img" width="220" height="146" ${imgAttrs} onerror="this.outerHTML='${fallbackIcon.replace(/'/g, "\\'")}'">`
+      : fallbackIcon;
+
+    const minusIcon = window.getFlatIcon ? window.getFlatIcon('minus', 'fd-icon--sm') : '−';
+    const plusIcon = window.getFlatIcon ? window.getFlatIcon('plus', 'fd-icon--sm') : '+';
+    const sproutIcon = window.getFlatIcon ? window.getFlatIcon('sprout', 'fd-icon--sm') : '';
+    const sparklesIcon = window.getFlatIcon ? window.getFlatIcon('sparkles', 'fd-icon--sm') : '';
+    const sunIcon = window.getFlatIcon ? window.getFlatIcon('sun', 'fd-icon--sm') : '';
+    const favIcon = isFav
+      ? (window.getFlatIcon ? window.getFlatIcon('heart-fill', 'fd-icon--heart-active') : '♥')
+      : (window.getFlatIcon ? window.getFlatIcon('heart', 'fd-icon--heart') : '♡');
+    const stIconHtml = window.getFlatIcon ? window.getFlatIcon(st.icon, 'fd-icon--sm') : '';
 
     let actionHtml = '';
     if (isOut) {
       actionHtml = `<span class="fd-tag fd-tag--out">Out of Stock</span>`;
     } else if (qty > 0) {
       actionHtml = `<div class="fd-stepper" aria-label="Quantity in bag">
-        <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}" aria-label="Decrease">−</button>
+        <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}" aria-label="Decrease">${minusIcon}</button>
         <span class="fd-stepper__val">${qty}</span>
-        <button type="button" class="fd-stepper__btn" data-qty-action="inc" data-code="${p.code}" aria-label="Increase">+</button>
+        <button type="button" class="fd-stepper__btn" data-qty-action="inc" data-code="${p.code}" aria-label="Increase">${plusIcon}</button>
       </div>`;
     } else {
-      actionHtml = `<button type="button" class="fd-add-btn" data-qty-action="inc" data-code="${p.code}">+ Add</button>`;
+      actionHtml = `<button type="button" class="fd-add-btn" data-qty-action="inc" data-code="${p.code}">${plusIcon} Add</button>`;
     }
 
     const basePrice = getProductBasePrice(p);
@@ -346,19 +357,19 @@
         <div>
           <div class="fd-card__top-bar">
             <div class="fd-card__tag-group">
-              ${isNew ? '<span class="fd-tag fd-tag--new">✨ NEW</span>' : ''}
-              ${stockSt === 'Seasonal' ? '<span class="fd-tag fd-tag--seasonal">🌦️ Seasonal</span>' : ''}
+              ${isNew ? `<span class="fd-tag fd-tag--new">${sparklesIcon} NEW</span>` : ''}
+              ${stockSt === 'Seasonal' ? `<span class="fd-tag fd-tag--seasonal">${sunIcon} Seasonal</span>` : ''}
               <span class="fd-tag fd-tag--code">#${p.order}</span>
             </div>
             <button type="button" class="fd-card__fav ${isFav ? 'is-fav' : ''}" data-fav-code="${p.code}" title="Save to My Lists" aria-label="Save ${p.name} to My Lists">
-              ${isFav ? '♥' : '♡'}
+              ${favIcon}
             </button>
           </div>
 
           <div class="fd-card__visual" style="--stage-tint: ${st.tint};" data-detail-code="${p.code}">
-            <span class="fd-card__storage-pill ${st.cls}">${st.short}</span>
+            <span class="fd-card__storage-pill ${st.cls}">${stIconHtml} ${st.short}</span>
             ${visualMedia}
-            <span class="fd-card__freshness">🌿 ${p.shelfLife === 'Long' ? 'Long-life' : p.shelfLife + 'd fresh'}</span>
+            <span class="fd-card__freshness">${sproutIcon} ${p.shelfLife === 'Long' ? 'Long-life' : p.shelfLife + 'd fresh'}</span>
           </div>
 
           <div class="fd-card__body">
@@ -380,25 +391,25 @@
   function renderHomeCarousels() {
     const carouselConfigs = [
       {
-        title: '🌟 Fresh at Dek Mit: 55 New Curated Additions',
+        title: 'Fresh at Dek Mit: 55 New Curated Additions',
         sub: 'In-house cold-pressed juices, Malakwang, Odii simsim paste, dressed local chicken & more',
         deptJump: 'new_arrivals',
         items: products.filter((p) => p.status === 'NEW').slice(0, 14)
       },
       {
-        title: '🥬 Peak-Season Ugandan Greens & Matooke',
+        title: 'Peak-Season Ugandan Greens & Matooke',
         sub: 'Humidified leafy vegetables and farm-direct cooking bananas & tubers',
         deptJump: 'vegetables',
         items: products.filter((p) => ['2.1', '2.7'].includes(p.sectionCode)).slice(0, 14)
       },
       {
-        title: '🥩 Butcher’s Block & Lake Victoria Catch',
+        title: 'Butcher’s Block & Lake Victoria Catch',
         sub: '2–5°C prime beef cuts, goat meat, dressed poultry, fresh Tilapia & Nile perch',
         deptJump: 'butchery',
         items: products.filter((p) => ['4.1', '4.2', '4.4', '5.1'].includes(p.sectionCode)).slice(0, 14)
       },
       {
-        title: '🍯 Northern Heritage, Pantry & Seasonal Delicacies',
+        title: 'Northern Heritage, Pantry & Seasonal Delicacies',
         sub: 'Simsim Odii, Moo Yao shea butter oil, Nambale beans, local honey & Nsenene',
         deptJump: 'pantry_dry',
         items: products.filter((p) => ['5.5', '5.6', '5.8', '5.9'].includes(p.sectionCode)).slice(0, 14)
@@ -415,7 +426,7 @@
               <p class="fd-section-head__sub">${cfg.sub}</p>
             </div>
             <button type="button" class="fd-section-head__link" data-go-dept="${cfg.deptJump}">
-              Shop All →
+              Shop All &rarr;
             </button>
           </div>
           <div class="fd-carousel-track">
@@ -447,9 +458,10 @@
       const meta = sectionsMeta[code];
       const count = products.filter((p) => p.sectionCode === code && matchesDept(p, state.dept)).length;
       const activeCls = state.sectionCode === code ? 'is-active' : '';
+      const secIcon = window.getSectionIcon ? window.getSectionIcon(code) : '';
       html += `
         <button type="button" class="fd-aisle-btn ${activeCls}" data-section-btn="${code}">
-          <span>${meta.icon} ${code} ${meta.section}</span>
+          <span>${secIcon} ${code} ${meta.section}</span>
           <span>${count}</span>
         </button>
       `;
@@ -508,8 +520,8 @@
       butchery: '2–5°C Chilled Butchery & Dressed Poultry',
       seafood_dairy: 'Lake Fish, Milk, Cheese & Farm Eggs',
       pantry_dry: 'Grains, Beans, Simsim Odii, Oils & Spices',
-      new_arrivals: '✨ 55 New Curated Additions to Dek Mit',
-      favorites: '♥ My Saved Reorder Lists'
+      new_arrivals: '55 New Curated Additions to Dek Mit',
+      favorites: 'My Saved Reorder Lists'
     };
 
     const secTitle =
@@ -548,13 +560,16 @@
     if (filtered.length === 0) {
       catalogueContainer.innerHTML = `
         <div style="background:#fff;border:1px solid var(--fd-border);border-radius:14px;padding:3rem;text-align:center;">
-          <p style="font-size:2.4rem;margin-bottom:0.5rem;">🥬</p>
+          <div style="color:var(--fd-green-primary);margin-bottom:0.5rem;">${window.getFlatIcon ? window.getFlatIcon('vegetable', 'fd-icon--xl') : ''}</div>
           <h3>No matching groceries found</h3>
           <p style="color:var(--fd-text-muted);font-size:0.86rem;margin-top:0.3rem;">Try clearing your search filter or switching departments.</p>
         </div>
       `;
       return;
     }
+
+    const minusIcon = window.getFlatIcon ? window.getFlatIcon('minus', 'fd-icon--sm') : '−';
+    const plusIcon = window.getFlatIcon ? window.getFlatIcon('plus', 'fd-icon--sm') : '+';
 
     if (state.viewMode === 'table') {
       const rows = filtered
@@ -567,7 +582,7 @@
           const isOut = p.stockStatus === 'Out of Stock';
           const thumbHtml = p.image
             ? `<img src="${p.image}" alt="${p.name}" class="fd-table-thumb" loading="lazy" width="40" height="40">`
-            : `${p.emoji} `;
+            : `<span class="fd-icon--sm" style="display:inline-block;vertical-align:middle;margin-right:4px;">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--sm') : ''}</span>`;
           return `
             <tr class="${isNew ? 'row--new' : ''}">
               <td><code>${p.code}</code></td>
@@ -593,11 +608,11 @@
                     ? '<span class="fd-tag fd-tag--out">Out of Stock</span>'
                     : qty > 0
                     ? `<div class="fd-stepper">
-                        <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}">−</button>
+                        <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}">${minusIcon}</button>
                         <span class="fd-stepper__val">${qty}</span>
-                        <button type="button" class="fd-stepper__btn" data-qty-action="inc" data-code="${p.code}">+</button>
+                        <button type="button" class="fd-stepper__btn" data-qty-action="inc" data-code="${p.code}">${plusIcon}</button>
                       </div>`
-                    : `<button type="button" class="fd-add-btn" data-qty-action="inc" data-code="${p.code}">+ Add</button>`
+                    : `<button type="button" class="fd-add-btn" data-qty-action="inc" data-code="${p.code}">${plusIcon} Add</button>`
                 }
               </td>
             </tr>
@@ -638,7 +653,8 @@
       let html = '';
       let secIdx = 0;
       groups.forEach((items, secCode) => {
-        const meta = sectionsMeta[secCode] || { section: 'Groceries', zone: 'Store', icon: '🛒' };
+        const meta = sectionsMeta[secCode] || { section: 'Groceries', zone: 'Store' };
+        const secIcon = window.getSectionIcon ? window.getSectionIcon(secCode) : '';
         const belowFoldClass = secIdx >= 2 ? 'is-below-fold' : '';
         secIdx++;
 
@@ -647,7 +663,7 @@
             <header class="fd-shelf-header">
               <h3 class="fd-shelf-header__title">
                 <span class="fd-shelf-header__badge">Aisle ${secCode}</span>
-                <span>${meta.icon} ${meta.section}</span>
+                <span>${secIcon} ${meta.section}</span>
               </h3>
               <span style="font-size:0.78rem;color:var(--fd-text-muted);">${items.length} item${items.length === 1 ? '' : 's'}</span>
             </header>
@@ -689,8 +705,9 @@
     const threshold = 50000;
     const pct = Math.min(100, Math.round((subtotal / threshold) * 100));
     freeBagProgressFill.style.width = pct + '%';
+    const giftIcon = window.getFlatIcon ? window.getFlatIcon('gift', 'fd-icon--sm') : '';
     if (subtotal >= threshold) {
-      freeBagProgressText.innerHTML = `🎉 <strong>Unlocked!</strong> Your order includes a <strong>FREE Reusable Dek Mit Shopping Bag!</strong>`;
+      freeBagProgressText.innerHTML = `${giftIcon} <strong>Unlocked!</strong> Your order includes a <strong>FREE Reusable Dek Mit Shopping Bag!</strong>`;
     } else {
       const diff = threshold - subtotal;
       freeBagProgressText.innerHTML = `Add <strong>${formatUGX(diff)}</strong> more to unlock a <strong>FREE Reusable Dek Mit Bag!</strong>`;
@@ -710,13 +727,16 @@
     if (entries.length === 0) {
       cartItemsContainer.innerHTML = `
         <div style="text-align:center;padding:2.5rem 1rem;color:var(--fd-text-muted);">
-          <p style="font-size:2.4rem;margin-bottom:0.4rem;">🛍️</p>
+          <div style="color:var(--fd-green-primary);margin-bottom:0.4rem;">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--xl') : ''}</div>
           <p><strong>Your Dek Mit Direct bag is empty</strong></p>
           <p style="font-size:0.8rem;margin-top:0.25rem;">Add fresh Ugandan fruits, misted leafy greens, prime meats, or pantry staples.</p>
         </div>
       `;
       return;
     }
+
+    const minusIcon = window.getFlatIcon ? window.getFlatIcon('minus', 'fd-icon--sm') : '−';
+    const plusIcon = window.getFlatIcon ? window.getFlatIcon('plus', 'fd-icon--sm') : '+';
 
     cartItemsContainer.innerHTML = entries
       .map(([code, qty]) => {
@@ -725,7 +745,7 @@
         const unitPrice = getProductPrice(p);
         const thumb = p.image
           ? `<img src="${p.image}" alt="${p.name}" class="fd-cart-thumb" width="46" height="46" fetchpriority="low">`
-          : `<span style="font-size:1.55rem;">${p.emoji}</span>`;
+          : `<span class="fd-cart-thumb" style="display:inline-flex;align-items:center;justify-content:center;background:var(--fd-bg-page);border-radius:6px;width:46px;height:46px;color:var(--fd-green-primary);">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--lg') : ''}</span>`;
         return `
           <div class="fd-cart-item">
             <div style="display:flex;align-items:center;gap:0.65rem;flex:1;">
@@ -736,9 +756,9 @@
               </div>
             </div>
             <div class="fd-stepper">
-              <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}">−</button>
+              <button type="button" class="fd-stepper__btn" data-qty-action="dec" data-code="${p.code}">${minusIcon}</button>
               <span class="fd-stepper__val">${qty}</span>
-              <button type="button" class="fd-stepper__btn" data-qty-action="inc" data-code="${p.code}">+</button>
+              <button type="button" class="fd-stepper__btn" data-qty-action="inc" data-code="${p.code}">${plusIcon}</button>
             </div>
           </div>
         `;
@@ -758,22 +778,28 @@
       ? `<img src="${p.image}" alt="${p.name}" class="fd-detail-banner" fetchpriority="low">`
       : '';
 
+    const crossIcon = window.getFlatIcon ? window.getFlatIcon('cross', 'fd-icon--sm') : '✕';
+    const sparklesIcon = window.getFlatIcon ? window.getFlatIcon('sparkles', 'fd-icon--sm') : '';
+    const stIcon = window.getFlatIcon ? window.getFlatIcon(st.icon, 'fd-icon--sm') : '';
+    const sproutIcon = window.getFlatIcon ? window.getFlatIcon('sprout', 'fd-icon--sm') : '';
+    const plusIcon = window.getFlatIcon ? window.getFlatIcon('plus', 'fd-icon--sm') : '+';
+
     productDetailContent.innerHTML = `
       <header class="fd-modal__header">
         <div>
           <span class="fd-tag fd-tag--code">Item ${p.code} &bull; Store Flow #${p.order}</span>
           <h2 id="detailDialogTitle" class="fd-modal__title" style="margin-top:0.3rem;">${p.name}</h2>
         </div>
-        <button type="button" class="fd-modal__close" data-close-dialog="productDetailDialog" aria-label="Close">✕</button>
+        <button type="button" class="fd-modal__close" data-close-dialog="productDetailDialog" aria-label="Close">${crossIcon}</button>
       </header>
       <div class="fd-modal__body">
         ${bannerImg}
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.9rem;">
           <span class="fd-tag ${p.status === 'NEW' ? 'fd-tag--new' : 'fd-tag--code'}">
-            ${p.status === 'NEW' ? '✨ NEW Suggested Addition' : '📋 Survey Catalogue Item'}
+            ${p.status === 'NEW' ? `${sparklesIcon} NEW Suggested Addition` : 'Survey Catalogue Item'}
           </span>
           <span class="fd-tag fd-tag--code">Aisle ${p.sectionCode}: ${p.section}</span>
-          <span class="fd-tag ${st.cls}">${p.storage}</span>
+          <span class="fd-tag ${st.cls}">${stIcon} ${p.storage}</span>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
@@ -787,7 +813,7 @@
           </div>
           <div style="background:var(--fd-bg-page);padding:0.75rem;border-radius:10px;border:1px solid var(--fd-border);">
             <span style="font-size:0.72rem;color:var(--fd-text-muted);display:block;">Freshness &amp; Wastage Tier</span>
-            <strong style="font-size:0.92rem;color:var(--fd-green-dark);">🌿 ${p.shelfLife === 'Long' ? 'Long-life' : p.shelfLife + 'd'} (${p.wastagePct || 5}% wastage buffer)</strong>
+            <strong style="font-size:0.92rem;color:var(--fd-green-dark);">${sproutIcon} ${p.shelfLife === 'Long' ? 'Long-life' : p.shelfLife + 'd'} (${p.wastagePct || 5}% wastage buffer)</strong>
           </div>
           <div style="background:var(--fd-bg-page);padding:0.75rem;border-radius:10px;border:1px solid var(--fd-border);">
             <span style="font-size:0.72rem;color:var(--fd-text-muted);display:block;">Cold-Chain / Display</span>
@@ -808,8 +834,8 @@
           <span style="font-size:0.76rem;color:var(--fd-text-muted);">In your bag:</span>
           <strong>${qty} ${p.uom}(s)</strong>
         </div>
-        <button type="button" class="fd-btn fd-btn--green" data-qty-action="inc" data-code="${p.code}">
-          + Add to Bag (${formatUGX(sellPrice)})
+        <button type="button" class="fd-btn fd-btn--green" data-qty-action="inc" data-code="${p.code}" style="display:inline-flex;align-items:center;gap:0.4rem;">
+          ${plusIcon} Add to Bag (${formatUGX(sellPrice)})
         </button>
       </footer>
     `;
@@ -849,9 +875,9 @@
             <td><strong style="color:var(--fd-green-primary);">${formatUGX(activeSell)}</strong></td>
             <td>
               <select class="fd-stock-select" data-edit-stock-code="${p.code}" aria-label="Stock status for ${p.name}">
-                <option value="In Stock" ${stStatus === 'In Stock' ? 'selected' : ''}>✅ In Stock</option>
-                <option value="Seasonal" ${stStatus === 'Seasonal' ? 'selected' : ''}>🌦️ Seasonal</option>
-                <option value="Out of Stock" ${stStatus === 'Out of Stock' ? 'selected' : ''}>⛔ Out of Stock</option>
+                <option value="In Stock" ${stStatus === 'In Stock' ? 'selected' : ''}>In Stock</option>
+                <option value="Seasonal" ${stStatus === 'Seasonal' ? 'selected' : ''}>Seasonal</option>
+                <option value="Out of Stock" ${stStatus === 'Out of Stock' ? 'selected' : ''}>Out of Stock</option>
               </select>
             </td>
           </tr>
@@ -938,7 +964,8 @@
     renderQuickPriceTable();
     if (syncStatusMsg) {
       syncStatusMsg.hidden = false;
-      syncStatusMsg.textContent = `✅ Synced ${updatedCount} product prices from ${sourceLabel} (${new Date().toLocaleTimeString()})`;
+      const checkIco = window.getFlatIcon ? window.getFlatIcon('check', 'fd-icon--sm') : '';
+      syncStatusMsg.innerHTML = `${checkIco} Synced ${updatedCount} product prices from ${sourceLabel} (${new Date().toLocaleTimeString()})`;
     }
     showToast(`Synced ${updatedCount} prices from ${sourceLabel}`);
     return updatedCount;
@@ -952,7 +979,7 @@
     school: {
       title: 'School-Going Healthy Snack Delivery',
       subtitle: 'Hygienic fresh fruit cups, cold-pressed juices & wholesome snacks delivered directly to schools (within 5km)',
-      summary: '🍎 <strong>Program Highlights:</strong> Pre-ordered custom snack packages replacing crisps and manufactured juices with cold-pressed natural juice, freshly sliced seasonal fruit cups, and roasted simsim snacks. Delivered chilled every morning before break time to schools within 5km of Kampala Central/Naguru.',
+      summary: `${window.getFlatIcon ? window.getFlatIcon('apple', 'fd-icon--sm') : ''} <strong>Program Highlights:</strong> Pre-ordered custom snack packages replacing crisps and manufactured juices with cold-pressed natural juice, freshly sliced seasonal fruit cups, and roasted simsim snacks. Delivered chilled every morning before break time to schools within 5km of Kampala Central/Naguru.`,
       locationLabel: 'School Name, Campus & Child Grade',
       locationPlaceholder: 'e.g. Kampala Parents School (Naguru) – Grade 4',
       locationHint: 'Delivered directly to school administration every morning within a 5km radius.',
@@ -962,7 +989,7 @@
     nutritionist: {
       title: 'Personalized Nutritionist Meal Plan & Delivery',
       subtitle: '1-on-1 clinical nutrition consultations with scheduled doorstep deliveries for registered members',
-      summary: '🥗 <strong>Program Highlights:</strong> Certified clinical nutritionist designs a personalized 7 or 14-day rotational dietary blueprint for your family (diabetes, hypertension, prenatal care, fitness, child growth). Pre-portioned fresh ingredients delivered to your doorstep on a recurring schedule with member savings.',
+      summary: `${window.getFlatIcon ? window.getFlatIcon('stethoscope', 'fd-icon--sm') : ''} <strong>Program Highlights:</strong> Certified clinical nutritionist designs a personalized 7 or 14-day rotational dietary blueprint for your family (diabetes, hypertension, prenatal care, fitness, child growth). Pre-portioned fresh ingredients delivered to your doorstep on a recurring schedule with member savings.`,
       locationLabel: 'Home Delivery Address & Area in Greater Kampala',
       locationPlaceholder: 'e.g. Plot 14, Prince Charles Drive, Kololo, Kampala',
       locationHint: 'Frequent recurring deliveries to registered member homes across Greater Kampala.',
@@ -972,7 +999,7 @@
     chef: {
       title: 'Celebrity Chef Cooking Demo & Community Kitchen',
       subtitle: 'Live culinary demonstrations feeding vulnerable community members on the last Saturday of every month',
-      summary: '🍳 <strong>Program Highlights:</strong> Renowned guest celebrity chefs cook live indigenous Ugandan dishes (Malakwang, steaming Matooke, sesame greens). 100% of freshly prepared meals are served freely to disadvantaged community members. Free public RSVP, volunteer slots, and ingredient sponsorship available.',
+      summary: `${window.getFlatIcon ? window.getFlatIcon('chef', 'fd-icon--sm') : ''} <strong>Program Highlights:</strong> Renowned guest celebrity chefs cook live indigenous Ugandan dishes (Malakwang, steaming Matooke, sesame greens). 100% of freshly prepared meals are served freely to disadvantaged community members. Free public RSVP, volunteer slots, and ingredient sponsorship available.`,
       locationLabel: 'Your Residential Area / Organization',
       locationPlaceholder: 'e.g. Resident in Nakasero or volunteer coordinator with local NGO',
       locationHint: 'Held on the last Saturday of every month at 10:30 AM at Dek Mit Hub.',
@@ -982,7 +1009,7 @@
     wednesday: {
       title: 'Wednesday 50% Off Market Day Reminders & Orders',
       subtitle: 'Receive early WhatsApp alerts and reserve peak-ripe market food at 50% discount',
-      summary: '⚡ <strong>Program Highlights:</strong> Every Wednesday 8:00 AM – 1:00 PM is a half-day market day. Food and farm-fresh produce are sold at 50% discount to cut waste and support families. Subscribe for early 7:30 AM item alerts and pre-reserve high-demand bundles.',
+      summary: `${window.getFlatIcon ? window.getFlatIcon('clock', 'fd-icon--sm') : ''} <strong>Program Highlights:</strong> Every Wednesday 8:00 AM – 1:00 PM is a half-day market day. Food and farm-fresh produce are sold at 50% discount to cut waste and support families. Subscribe for early 7:30 AM item alerts and pre-reserve high-demand bundles.`,
       locationLabel: 'Preferred Delivery Area or Pickup Location',
       locationPlaceholder: 'e.g. Delivery to Ntinda or in-person pickup at Dek Mit Hub',
       locationHint: 'Wednesday 50% discount runs from 8:00 AM to 1:00 PM every Wednesday.',
@@ -1037,10 +1064,10 @@
     const isActive = isWednesdayDiscountActive();
 
     if (isWed) {
-      wednesdayLiveStatus.textContent = '🟢 ACTIVE TODAY (8 AM – 1 PM)';
+      wednesdayLiveStatus.textContent = 'ACTIVE TODAY (8 AM – 1 PM)';
       wednesdayLiveStatus.className = 'fd-live-pill is-active';
     } else if (state.wednesdayOverride) {
-      wednesdayLiveStatus.textContent = '⚡ 50% Preview Active';
+      wednesdayLiveStatus.textContent = '50% Preview Active';
       wednesdayLiveStatus.className = 'fd-live-pill is-active';
     } else {
       wednesdayLiveStatus.textContent = 'Next: Wednesday 8 AM';
@@ -1048,7 +1075,7 @@
     }
 
     if (isActive) {
-      wednesdayToggleText.textContent = '✓ 50% Active (Click to Revert)';
+      wednesdayToggleText.textContent = '50% Active (Click to Revert)';
     } else {
       wednesdayToggleText.textContent = 'Preview 50% Market Prices';
     }
@@ -1277,7 +1304,7 @@
         updateWednesdayUI();
         renderAll();
         if (state.wednesdayOverride) {
-          showToast('⚡ Wednesday 50% Market Day discount applied across all 247 items!');
+          showToast('Wednesday 50% Market Day discount applied across all 247 items!');
         } else {
           showToast('Standard catalogue pricing restored.');
         }
@@ -1302,10 +1329,10 @@
 
         const msg =
           `*Dek Mit Program Inquiry: ${typeTitle}*\n\n` +
-          `👤 *Name:* ${progName}\n` +
-          `📞 *Phone/WhatsApp:* ${progPh}\n` +
-          `📍 *Location/School:* ${progLoc}\n` +
-          (progN ? `📝 *Notes/Goals:* ${progN}\n` : '') +
+          `*Name:* ${progName}\n` +
+          `*Phone/WhatsApp:* ${progPh}\n` +
+          `*Location/School:* ${progLoc}\n` +
+          (progN ? `*Notes/Goals:* ${progN}\n` : '') +
           `\n_Sent via Dek Mit Direct Online Storefront_`;
 
         const waUrl = `https://wa.me/256700000000?text=${encodeURIComponent(msg)}`;
@@ -1339,7 +1366,7 @@
       state.cart['3.1-04'] = (state.cart['3.1-04'] || 0) + 1;
       saveCart();
       renderAll();
-      showToast('Added 🛍️ Reusable Dek Mit Shopping Bag');
+      showToast('Added Reusable Dek Mit Shopping Bag');
     });
 
     clearCartBtn.addEventListener('click', () => {
@@ -1388,17 +1415,22 @@
           `*TOTAL: ${formatUGX(grandTotal)}*`
       );
 
+      const checkIcon = window.getFlatIcon ? window.getFlatIcon('check', 'fd-icon--sm') : '✓';
+      const waIcon = window.getFlatIcon ? window.getFlatIcon('whatsapp', 'fd-icon--sm') : '';
+
       cartItemsContainer.innerHTML = `
         <div style="background:var(--fd-green-tint);border:1px solid var(--fd-green-primary);padding:1.2rem;border-radius:12px;">
-          <h3 style="color:var(--fd-green-dark);margin-bottom:0.3rem;">✅ Order ${orderRef} Reserved!</h3>
+          <h3 style="color:var(--fd-green-dark);margin-bottom:0.3rem;display:flex;align-items:center;gap:0.4rem;">
+            ${checkIcon} Order ${orderRef} Reserved!
+          </h3>
           <p style="font-size:0.82rem;margin-bottom:0.65rem;">Thank you, <strong>${name}</strong>! Your delivery window (<strong>${state.timeSlot}</strong>) is confirmed.</p>
           <div style="background:#fff;padding:0.7rem;border-radius:8px;font-size:0.78rem;max-height:170px;overflow-y:auto;margin-bottom:0.8rem;">
             ${lines.map((l) => `<div>${l}</div>`).join('')}
             <hr style="margin:0.45rem 0;border:none;border-top:1px solid #ddd;">
             <strong>Total Payable: ${formatUGX(grandTotal)} (${payment})</strong>
           </div>
-          <a href="https://wa.me/?text=${waMsg}" target="_blank" rel="noopener" class="fd-btn fd-btn--green fd-btn--full" style="text-decoration:none;">
-            📲 Send Receipt to WhatsApp
+          <a href="https://wa.me/?text=${waMsg}" target="_blank" rel="noopener" class="fd-btn fd-btn--green fd-btn--full" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;">
+            ${waIcon} Send Receipt to WhatsApp
           </a>
         </div>
       `;
@@ -1528,7 +1560,8 @@
         }
         state.sheetUrl = url;
         localStorage.setItem('dekmit_sheet_url', url);
-        syncSheetBtn.textContent = '⏳ Syncing...';
+        const refreshIco = window.getFlatIcon ? window.getFlatIcon('refresh', 'fd-icon--sm') : '';
+        syncSheetBtn.innerHTML = `${refreshIco} Syncing...`;
         try {
           const resp = await fetch(url, { cache: 'no-store' });
           if (!resp.ok) throw new Error('Network error');
@@ -1537,7 +1570,7 @@
         } catch (err) {
           showToast('Could not fetch URL. Ensure the Google Sheet is Published to the Web as CSV.');
         } finally {
-          syncSheetBtn.textContent = '🔄 Sync Sheet Now';
+          syncSheetBtn.innerHTML = `${refreshIco} Sync Sheet Now`;
         }
       });
     }
