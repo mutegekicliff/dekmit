@@ -359,7 +359,6 @@
             <div class="fd-card__tag-group">
               ${isNew ? `<span class="fd-tag fd-tag--new">${sparklesIcon} NEW</span>` : ''}
               ${stockSt === 'Seasonal' ? `<span class="fd-tag fd-tag--seasonal">${sunIcon} Seasonal</span>` : ''}
-              <span class="fd-tag fd-tag--code">#${p.order}</span>
             </div>
             <button type="button" class="fd-card__fav ${isFav ? 'is-fav' : ''}" data-fav-code="${p.code}" title="Save to My Lists" aria-label="Save ${p.name} to My Lists">
               ${favIcon}
@@ -585,7 +584,6 @@
           return `
             <tr class="${isNew ? 'row--new' : ''}">
               <td><code>${p.code}</code></td>
-              <td>#${p.order}</td>
               <td>
                 <strong style="cursor:pointer;" data-detail-code="${p.code}">${thumbHtml}${p.name}</strong>
                 ${isNew ? '<span class="fd-tag fd-tag--new" style="margin-left:4px;">NEW</span>' : ''}
@@ -625,7 +623,6 @@
             <thead>
               <tr>
                 <th>Code</th>
-                <th>Flow</th>
                 <th>Item</th>
                 <th>Variant</th>
                 <th>UOM</th>
@@ -785,7 +782,7 @@
     productDetailContent.innerHTML = `
       <header class="fd-modal__header">
         <div>
-          <span class="fd-tag fd-tag--code">Item ${p.code} | Store Flow #${p.order}</span>
+          <span class="fd-tag fd-tag--code">Item ${p.code}</span>
           <h2 id="detailDialogTitle" class="fd-modal__title" style="margin-top:0.3rem;">${p.name}</h2>
         </div>
         <button type="button" class="fd-modal__close" data-close-dialog="productDetailDialog" aria-label="Close">${crossIcon}</button>
