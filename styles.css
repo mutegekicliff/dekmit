@@ -40,6 +40,11 @@
   padding: 0;
 }
 
+ul, ol {
+  list-style: none;
+  padding-left: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -2358,44 +2363,21 @@ body {
   margin-bottom: 1.1rem;
 }
 
-/* Upgraded Perks List with Pill Bullet Icons */
+/* Perks List without Bullets */
 .fd-promo-card__perks {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.65rem;
   margin-top: auto;
   margin-bottom: 1.1rem;
-  font-size: 0.84rem;
-  color: #1e293b;
+  font-size: 0.85rem;
+  color: #334155;
+  padding: 0;
 }
 
 .fd-promo-card__perks li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
   line-height: 1.45;
-}
-
-.fd-perk-bullet {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-  margin-top: 2px;
-}
-
-.fd-perk-bullet svg {
-  width: 12px;
-  height: 12px;
-  stroke: #166534;
-  stroke-width: 3;
 }
 
 /* School Food Swap Box Overhaul */
@@ -2608,15 +2590,7 @@ body {
   font-size: 0.76rem;
   color: #64748b;
   font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.fd-promo-card__note::before {
-  content: "•";
-  color: var(--fd-green-primary);
-  font-weight: 800;
+  display: block;
 }
 
 /* Wednesday 50% Price Display on Product Cards & Tables */

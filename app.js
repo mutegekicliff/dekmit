@@ -198,7 +198,7 @@
 
   function updateHeaderPricingLabel() {
     const overrideCount = Object.keys(state.priceOverrides).length;
-    const suffix = overrideCount > 0 ? ` • ${overrideCount} edited` : '';
+    const suffix = overrideCount > 0 ? ` (${overrideCount} edited)` : '';
     if (state.pricingMode === 'smart') {
       activeMarginLabel.textContent = 'Smart Formula' + suffix;
     } else if (state.pricingMode === 'custom' && state.marginPercent > 0) {
@@ -375,7 +375,7 @@
           <div class="fd-card__body">
             <div class="fd-card__dept">${p.section}</div>
             <h3 class="fd-card__title" data-detail-code="${p.code}">${p.name}</h3>
-            <p class="fd-card__uom">${p.variant ? `${p.variant} &bull; ` : ''}Sold per ${p.uom}</p>
+            <p class="fd-card__uom">${p.variant ? `${p.variant} — ` : ''}Sold per ${p.uom}</p>
           </div>
         </div>
 
@@ -458,10 +458,9 @@
       const meta = sectionsMeta[code];
       const count = products.filter((p) => p.sectionCode === code && matchesDept(p, state.dept)).length;
       const activeCls = state.sectionCode === code ? 'is-active' : '';
-      const secIcon = window.getSectionIcon ? window.getSectionIcon(code) : '';
       html += `
         <button type="button" class="fd-aisle-btn ${activeCls}" data-section-btn="${code}">
-          <span>${secIcon} ${code} ${meta.section}</span>
+          <span>${code} ${meta.section}</span>
           <span>${count}</span>
         </button>
       `;
@@ -663,7 +662,7 @@
             <header class="fd-shelf-header">
               <h3 class="fd-shelf-header__title">
                 <span class="fd-shelf-header__badge">Aisle ${secCode}</span>
-                <span>${secIcon} ${meta.section}</span>
+                <span>${meta.section}</span>
               </h3>
               <span style="font-size:0.78rem;color:var(--fd-text-muted);">${items.length} item${items.length === 1 ? '' : 's'}</span>
             </header>
@@ -699,7 +698,7 @@
 
     headerCartCount.textContent = totalUnits;
     headerCartTotal.textContent = formatUGX(subtotal);
-    cartDialogSubtitle.textContent = `${totalUnits} item${totalUnits === 1 ? '' : 's'} • ${state.timeSlot}`;
+    cartDialogSubtitle.textContent = `${totalUnits} item${totalUnits === 1 ? '' : 's'} | ${state.timeSlot}`;
     cartSlotSummary.textContent = state.location.split('—')[0].trim();
 
     const threshold = 50000;
@@ -752,7 +751,7 @@
               ${thumb}
               <div>
                 <div style="font-size:0.88rem;font-weight:700;">${p.name} ${p.variant ? `<span style="color:var(--fd-text-muted);font-weight:500;">(${p.variant})</span>` : ''}</div>
-                <div style="font-size:0.74rem;color:var(--fd-text-muted);">${formatUGX(unitPrice)} / ${p.uom} &bull; <strong>${formatUGX(unitPrice * qty)}</strong></div>
+                <div style="font-size:0.74rem;color:var(--fd-text-muted);">${formatUGX(unitPrice)} / ${p.uom} — <strong>${formatUGX(unitPrice * qty)}</strong></div>
               </div>
             </div>
             <div class="fd-stepper">
@@ -787,7 +786,7 @@
     productDetailContent.innerHTML = `
       <header class="fd-modal__header">
         <div>
-          <span class="fd-tag fd-tag--code">Item ${p.code} &bull; Store Flow #${p.order}</span>
+          <span class="fd-tag fd-tag--code">Item ${p.code} | Store Flow #${p.order}</span>
           <h2 id="detailDialogTitle" class="fd-modal__title" style="margin-top:0.3rem;">${p.name}</h2>
         </div>
         <button type="button" class="fd-modal__close" data-close-dialog="productDetailDialog" aria-label="Close">${crossIcon}</button>
@@ -1397,7 +1396,7 @@
         const p = products.find((item) => item.code === code);
         const unit = getProductPrice(p);
         subtotal += unit * qty;
-        return `• ${qty}x ${p.name} ${p.variant ? `(${p.variant})` : ''} — ${formatUGX(unit * qty)}`;
+        return `${qty}x ${p.name} ${p.variant ? `(${p.variant})` : ''} — ${formatUGX(unit * qty)}`;
       });
 
       const grandTotal = subtotal + deliveryFee;
