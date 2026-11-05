@@ -293,11 +293,22 @@
     renderAll();
   }
 
-  // Render a single FreshDirect Product Card
+  // Global image error handler for product cards
+  window.handleCardImgError = function(img) {
+    img.style.display = 'none';
+    const parent = img.parentElement;
+    if (parent && !parent.querySelector('.fd-card__flat-fallback')) {
+      const fb = document.createElement('span');
+      fb.className = 'fd-card__flat-fallback';
+      fb.innerHTML = window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--xl') : '';
+      parent.appendChild(fb);
+    }
+  };
+
+  // Render a single FreshDirect Product Card (Minimalist Clean Design)
   function renderFDCard(p, opts = {}) {
     const qty = state.cart[p.code] || 0;
     const sellPrice = getProductPrice(p);
-    const st = getStorageInfo(p.storage);
     const isNew = p.status === 'NEW';
     const isFav = state.favorites.includes(p.code);
     const stockSt = p.stockStatus || 'In Stock';
@@ -308,20 +319,15 @@
       imgAttrs = opts.index >= 4 ? 'fetchpriority="low" loading="lazy"' : '';
     }
 
-    const fallbackIcon = `<span class="fd-card__flat-fallback">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--xl') : ''}</span>`;
     const visualMedia = p.image
-      ? `<img src="${p.image}" alt="${p.name}" class="fd-card__img" width="220" height="146" ${imgAttrs} onerror="this.outerHTML='${fallbackIcon.replace(/'/g, "\\'")}'">`
-      : fallbackIcon;
+      ? `<img src="${p.image}" alt="${p.name}" class="fd-card__img" width="220" height="155" ${imgAttrs} onerror="window.handleCardImgError(this)">`
+      : `<span class="fd-card__flat-fallback">${window.getFlatIcon ? window.getFlatIcon('shopping-bag', 'fd-icon--xl') : ''}</span>`;
 
     const minusIcon = window.getFlatIcon ? window.getFlatIcon('minus', 'fd-icon--sm') : '−';
     const plusIcon = window.getFlatIcon ? window.getFlatIcon('plus', 'fd-icon--sm') : '+';
-    const sproutIcon = window.getFlatIcon ? window.getFlatIcon('sprout', 'fd-icon--sm') : '';
-    const sparklesIcon = window.getFlatIcon ? window.getFlatIcon('sparkles', 'fd-icon--sm') : '';
-    const sunIcon = window.getFlatIcon ? window.getFlatIcon('sun', 'fd-icon--sm') : '';
     const favIcon = isFav
       ? (window.getFlatIcon ? window.getFlatIcon('heart-fill', 'fd-icon--heart-active') : '♥')
       : (window.getFlatIcon ? window.getFlatIcon('heart', 'fd-icon--heart') : '♡');
-    const stIconHtml = window.getFlatIcon ? window.getFlatIcon(st.icon, 'fd-icon--sm') : '';
 
     let actionHtml = '';
     if (isOut) {
@@ -345,36 +351,51 @@
             <span class="fd-card__price fd-card__price--sale">${formatUGX(sellPrice)}</span>
             <span class="fd-card__unit-sub">/${p.uom}</span>
           </div>
-          <span class="fd-tag-wed-sale">50% WED</span>
+          <span class="fd-tag-wed-sale">50% OFF</span>
         </div>`
       : `<div>
           <span class="fd-card__price">${formatUGX(sellPrice)}</span>
           <span class="fd-card__unit-sub">/${p.uom}</span>
         </div>`;
 
+    // Clean, minimalist subtitle
+    let subtitle = `Per ${p.uom}`;
+    if (p.variant) {
+      if (p.variant.toLowerCase().includes(p.uom.toLowerCase())) {
+        subtitle = p.variant;
+      } else {
+        subtitle = `${p.variant} · Per ${p.uom}`;
+      }
+    }
+
+    // Minimal single tag
+    let tagHtml = '';
+    if (isNew) {
+      tagHtml = `<span class="fd-tag fd-tag--new">New</span>`;
+    } else if (stockSt === 'Seasonal') {
+      tagHtml = `<span class="fd-tag fd-tag--seasonal">Seasonal</span>`;
+    }
+
     return `
       <article class="fd-card ${isNew ? 'fd-card--new' : ''} ${isOut ? 'fd-card--out' : ''}" data-product-code="${p.code}">
         <div>
           <div class="fd-card__top-bar">
             <div class="fd-card__tag-group">
-              ${isNew ? `<span class="fd-tag fd-tag--new">${sparklesIcon} NEW</span>` : ''}
-              ${stockSt === 'Seasonal' ? `<span class="fd-tag fd-tag--seasonal">${sunIcon} Seasonal</span>` : ''}
+              ${tagHtml}
             </div>
             <button type="button" class="fd-card__fav ${isFav ? 'is-fav' : ''}" data-fav-code="${p.code}" title="Save to My Lists" aria-label="Save ${p.name} to My Lists">
               ${favIcon}
             </button>
           </div>
 
-          <div class="fd-card__visual" style="--stage-tint: ${st.tint};" data-detail-code="${p.code}">
-            <span class="fd-card__storage-pill ${st.cls}">${stIconHtml} ${st.short}</span>
+          <div class="fd-card__visual" data-detail-code="${p.code}">
             ${visualMedia}
-            <span class="fd-card__freshness">${sproutIcon} ${p.shelfLife === 'Long' ? 'Long-life' : p.shelfLife + 'd fresh'}</span>
           </div>
 
           <div class="fd-card__body">
             <div class="fd-card__dept">${p.section}</div>
             <h3 class="fd-card__title" data-detail-code="${p.code}">${p.name}</h3>
-            <p class="fd-card__uom">${p.variant ? `${p.variant} — ` : ''}Sold per ${p.uom}</p>
+            <p class="fd-card__uom">${subtitle}</p>
           </div>
         </div>
 

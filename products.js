@@ -680,7 +680,7 @@ window.DEK_MIT_PRODUCTS = [
     "status": "NEW",
     "notes": "NEW – Est. price",
     "emoji": "🥭",
-    "image": "https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=500&q=80",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Cut_sugarcane.jpg/500px-Cut_sugarcane.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
     "sourcingCost": 800,
     "proposedPrice": 1100,
     "grossProfit": 300,
