@@ -1878,3 +1878,609 @@ body {
   box-shadow: var(--fd-shadow-hover);
 }
 
+/* ==========================================================================
+   Dek Mit Promotions & Community Initiatives Showcase
+   ========================================================================== */
+
+/* Top bar & Dept nav highlight pills */
+.fd-utility-link--glow {
+  background: rgba(255, 107, 0, 0.22);
+  border: 1px solid rgba(255, 107, 0, 0.55);
+  color: #ffd8a8;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--fd-radius-pill);
+  transition: all 0.2s ease;
+}
+
+.fd-utility-link--glow:hover {
+  background: var(--fd-orange-cta);
+  color: #ffffff;
+}
+
+.fd-dept-link--promo {
+  color: var(--fd-orange-cta) !important;
+  font-weight: 700 !important;
+  position: relative;
+}
+
+.fd-dept-link--promo .fd-dept-count {
+  background: #ffedd5 !important;
+  color: #9a3412 !important;
+  font-weight: 800;
+}
+
+.fd-eyebrow--promo {
+  color: var(--fd-green-primary);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+}
+
+/* Promotions Section Outer Container */
+.fd-promo-showcase {
+  margin-top: 1.8rem;
+  margin-bottom: 2rem;
+  padding: 1.75rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f7faf7 100%);
+  border: 1.5px solid #d7e4d8;
+  border-radius: var(--fd-radius-lg);
+  box-shadow: 0 4px 18px rgba(0, 77, 37, 0.04);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.fd-promo-showcase.is-highlighted {
+  border-color: var(--fd-orange-cta);
+  box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.18), 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.fd-promo-showcase__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--fd-border);
+  margin-bottom: 1.5rem;
+}
+
+.fd-promo-showcase__lead {
+  max-width: 740px;
+}
+
+.fd-promo-showcase__title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--fd-green-dark);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.fd-promo-showcase__desc {
+  font-size: 0.9rem;
+  color: var(--fd-text-muted);
+  line-height: 1.5;
+}
+
+.fd-promo-showcase__badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fd-pill-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ffffff;
+  border: 1px solid var(--fd-border);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--fd-radius-pill);
+  font-size: 0.78rem;
+  color: var(--fd-text-main);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.fd-pill-stat strong {
+  color: var(--fd-green-primary);
+  font-weight: 800;
+}
+
+/* 2x2 Responsive Grid */
+.fd-promo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+@media (max-width: 900px) {
+  .fd-promo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual Promo Cards */
+.fd-promo-card {
+  background: #ffffff;
+  border-radius: var(--fd-radius-md);
+  border: 1.5px solid var(--fd-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--fd-shadow-card);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.fd-promo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fd-shadow-hover);
+}
+
+/* Color Accents per Program */
+.fd-promo-card--wednesday {
+  border-top: 4px solid var(--fd-orange-cta);
+}
+.fd-promo-card--chef {
+  border-top: 4px solid #7c3aed;
+}
+.fd-promo-card--school {
+  border-top: 4px solid #0284c7;
+}
+.fd-promo-card--nutritionist {
+  border-top: 4px solid var(--fd-green-primary);
+}
+
+.fd-promo-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.15rem 0.6rem;
+  border-bottom: 1px dashed var(--fd-border);
+  background: #fafbfa;
+}
+
+.fd-ribbon-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--fd-text-muted);
+  text-transform: uppercase;
+}
+
+.fd-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--fd-radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.fd-live-pill.is-active {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+  animation: pulseGreen 1.8s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.fd-live-pill--purple {
+  background: #f3e8ff;
+  color: #6b21a8;
+  border-color: #d8b4fe;
+}
+
+.fd-live-pill--blue {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+
+.fd-live-pill--green {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+.fd-promo-card__body {
+  padding: 1.15rem;
+  flex: 1;
+}
+
+.fd-promo-card__header-flex {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.fd-promo-card__icon {
+  font-size: 1.9rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f7f1;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.fd-promo-card--wednesday .fd-promo-card__icon {
+  background: #fff7ed;
+}
+
+.fd-promo-card--chef .fd-promo-card__icon {
+  background: #faf5ff;
+}
+
+.fd-promo-card--school .fd-promo-card__icon {
+  background: #f0f9ff;
+}
+
+.fd-promo-card__title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--fd-text-main);
+  line-height: 1.25;
+}
+
+.fd-promo-card__tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--fd-green-primary);
+  margin-top: 0.2rem;
+}
+
+.fd-promo-card--wednesday .fd-promo-card__tagline {
+  color: var(--fd-orange-cta);
+}
+.fd-promo-card--chef .fd-promo-card__tagline {
+  color: #7c3aed;
+}
+.fd-promo-card--school .fd-promo-card__tagline {
+  color: #0284c7;
+}
+
+.fd-promo-card__text {
+  font-size: 0.86rem;
+  color: var(--fd-text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.85rem;
+}
+
+.fd-promo-card__perks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.82rem;
+  color: var(--fd-text-main);
+}
+
+.fd-promo-card__perks strong {
+  color: var(--fd-green-dark);
+}
+
+/* School Snack Before/After Food Swap Box */
+.fd-swap-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--fd-radius-sm);
+  padding: 0.7rem 0.85rem;
+  margin-block: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  .fd-swap-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.fd-swap-item {
+  flex: 1;
+  font-size: 0.77rem;
+  line-height: 1.35;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.fd-swap-badge {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.fd-swap-item--out .fd-swap-badge {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.fd-swap-item--out span:last-child {
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.fd-swap-arrow {
+  color: var(--fd-green-bright);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.fd-swap-item--in .fd-swap-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.fd-swap-item--in span:last-child {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.fd-promo-card__actions {
+  padding: 0.95rem 1.15rem;
+  border-top: 1px solid var(--fd-border);
+  background: #fafbfa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fd-promo-card__note {
+  font-size: 0.74rem;
+  color: var(--fd-text-muted);
+}
+
+/* Card Button Variants */
+.fd-btn--wednesday {
+  background: var(--fd-orange-cta);
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: var(--fd-radius-pill);
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fd-btn--wednesday:hover {
+  background: var(--fd-orange-hover);
+}
+
+.fd-btn--chef {
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--fd-radius-pill);
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fd-btn--chef:hover {
+  background: #6d28d9;
+}
+
+.fd-btn--school {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--fd-radius-pill);
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fd-btn--school:hover {
+  background: #0369a1;
+}
+
+.fd-btn--nutritionist {
+  background: var(--fd-green-primary);
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--fd-radius-pill);
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fd-btn--nutritionist:hover {
+  background: var(--fd-green-dark);
+}
+
+/* Wednesday 50% Price Display on Product Cards & Tables */
+.fd-card__price-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fd-card__price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.fd-card__price-orig {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.fd-card__price--sale {
+  color: var(--fd-orange-cta) !important;
+  font-weight: 800;
+}
+
+.fd-tag-wed-sale {
+  display: inline-block;
+  background: #ffedd5;
+  color: #c2410c;
+  font-size: 0.66rem;
+  font-weight: 800;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* ==========================================================================
+   Program Enrollment & Inquiry Modal Forms
+   ========================================================================== */
+
+.fd-modal__content--form {
+  max-width: 620px;
+  width: 100%;
+}
+
+.fd-program-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.fd-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fd-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .fd-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fd-form-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--fd-text-main);
+}
+
+.fd-req {
+  color: #dc2626;
+}
+
+.fd-form-select,
+.fd-form-input,
+.fd-form-textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--fd-border-strong);
+  border-radius: var(--fd-radius-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--fd-text-main);
+  background: #ffffff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.fd-form-select:focus,
+.fd-form-input:focus,
+.fd-form-textarea:focus {
+  outline: none;
+  border-color: var(--fd-green-primary);
+  box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.15);
+}
+
+.fd-form-hint {
+  font-size: 0.75rem;
+  color: var(--fd-text-muted);
+  line-height: 1.35;
+}
+
+.fd-form-summary-box {
+  background: #f0f7f1;
+  border: 1px solid #d1e7d5;
+  border-radius: var(--fd-radius-sm);
+  padding: 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #14532d;
+}
+
+.fd-btn--full {
+  width: 100%;
+  padding: 0.8rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Success Confirmation Screen in Dialog */
+.fd-prog-success {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.fd-prog-success__icon {
+  font-size: 2.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.fd-prog-success__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--fd-green-dark);
+  margin-bottom: 0.5rem;
+}
+
+.fd-prog-success__desc {
+  font-size: 0.88rem;
+  color: var(--fd-text-muted);
+  line-height: 1.5;
+  max-width: 480px;
+  margin-inline: auto;
+  margin-bottom: 1.5rem;
+}
+
+.fd-prog-success__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+

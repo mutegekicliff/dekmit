@@ -25,6 +25,9 @@
       </div>
       <div class="fd-utility-right">
         <span class="fd-utility-promo">🌿 Free Reusable Dek Mit Bag on orders over <strong>UGX 50,000</strong></span>
+        <button type="button" class="fd-utility-link fd-utility-link--glow" id="quickPromoTopBtn" title="View Wednesday 50% deals, chef show, school snacks & nutritionist meal plans">
+          🎁 Programs &amp; Deals
+        </button>
         <button type="button" id="pricingToggleBtn" class="fd-utility-link" title="Configure retail margin % over survey market prices">
           ⚙️ Pricing: <strong id="activeMarginLabel">Market (0%)</strong>
         </button>
@@ -93,6 +96,9 @@
         </button>
         <button type="button" class="fd-dept-link" data-dept="all">
           📋 Full Aisle Catalogue <span class="fd-dept-count">247</span>
+        </button>
+        <button type="button" class="fd-dept-link fd-dept-link--promo" data-dept="promotions" title="Wednesday 50% deals, chef show, school snacks & nutritionist meal plans">
+          🎁 Programs &amp; Deals <span class="fd-dept-count">4</span>
         </button>
         <button type="button" class="fd-dept-link" data-dept="fruits">
           🥭 Fruits &amp; Juices <span class="fd-dept-count">42</span>
@@ -239,6 +245,168 @@
             <div class="fd-circle-card__avatar"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Tahina.JPG/500px-Tahina.JPG" alt="Odii, Oils &amp; Spices" width="78" height="78"></div>
             <span class="fd-circle-card__label">Odii, Oils &amp; Spices</span>
           </button>
+        </div>
+      </section>
+
+      <!-- EXCLUSIVE DEK MIT PROGRAMS & COMMUNITY DEALS SHOWCASE -->
+      <section class="fd-promo-showcase fd-container" id="promotionsSection" aria-labelledby="promoShowcaseTitle">
+        <div class="fd-promo-showcase__head">
+          <div class="fd-promo-showcase__lead">
+            <span class="fd-eyebrow fd-eyebrow--promo">🌱 COMMUNITY &amp; HEALTH INITIATIVES</span>
+            <h2 class="fd-promo-showcase__title" id="promoShowcaseTitle">Exclusive Dek Mit Programs &amp; Weekly Deals</h2>
+            <p class="fd-promo-showcase__desc">
+              More than just farm-direct groceries: discover our 50% Wednesday half-day food discount, monthly celebrity chef community kitchen, school fruit snack boxes, and in-house nutritionist home deliveries.
+            </p>
+          </div>
+          <div class="fd-promo-showcase__badges">
+            <span class="fd-pill-stat"><strong>50%</strong> Wed Discount</span>
+            <span class="fd-pill-stat"><strong>5km</strong> School Radius</span>
+            <span class="fd-pill-stat"><strong>100%</strong> Free Meals</span>
+            <span class="fd-pill-stat"><strong>1-on-1</strong> Nutritionist</span>
+          </div>
+        </div>
+
+        <div class="fd-promo-grid">
+          <!-- 1. Wednesday Half-Day Market Day Card -->
+          <article class="fd-promo-card fd-promo-card--wednesday">
+            <div class="fd-promo-card__top">
+              <span class="fd-ribbon-tag">⚡ EVERY WEDNESDAY &bull; 8:00 AM – 1:00 PM</span>
+              <span class="fd-live-pill" id="wednesdayLiveStatus">Next: Wednesday 8 AM</span>
+            </div>
+            <div class="fd-promo-card__body">
+              <div class="fd-promo-card__header-flex">
+                <div class="fd-promo-card__icon" aria-hidden="true">🛒</div>
+                <div>
+                  <h3 class="fd-promo-card__title">Wednesday Half-Day Market Day</h3>
+                  <p class="fd-promo-card__tagline">50% off all fresh food &bull; Zero farm waste initiative</p>
+                </div>
+              </div>
+              <p class="fd-promo-card__text">
+                Every Wednesday morning until 1:00 PM, all fresh produce, greens, butchery cuts, and farm-direct items are sold at a direct <strong>50% discount</strong>. This rescues peak-ripe crops, supports our rural farmers, and lets families stock up affordably for the week!
+              </p>
+              <ul class="fd-promo-card__perks">
+                <li>✓ <strong>50% discount</strong> across fresh food catalogue</li>
+                <li>✓ Perfect for family stews, batch blending &amp; juicing</li>
+                <li>✓ Cuts farm waste by moving ripe crops rapidly</li>
+              </ul>
+            </div>
+            <div class="fd-promo-card__actions">
+              <button type="button" class="fd-btn fd-btn--wednesday" id="toggleWednesdayPreviewBtn">
+                ⚡ <span id="wednesdayToggleText">Preview 50% Market Prices</span>
+              </button>
+              <button type="button" class="fd-link-btn" data-open-program="wednesday">
+                Get WhatsApp Reminder Alerts →
+              </button>
+            </div>
+          </article>
+
+          <!-- 2. Celebrity Chef Community Cooking Show Card -->
+          <article class="fd-promo-card fd-promo-card--chef">
+            <div class="fd-promo-card__top">
+              <span class="fd-ribbon-tag">🍳 LAST SATURDAY OF EVERY MONTH</span>
+              <span class="fd-live-pill fd-live-pill--purple">Community Kitchen</span>
+            </div>
+            <div class="fd-promo-card__body">
+              <div class="fd-promo-card__header-flex">
+                <div class="fd-promo-card__icon" aria-hidden="true">👨‍🍳</div>
+                <div>
+                  <h3 class="fd-promo-card__title">Celebrity Chef Cooking Demo</h3>
+                  <p class="fd-promo-card__tagline">Inspiring culinary masterclasses feeding vulnerable locals</p>
+                </div>
+              </div>
+              <p class="fd-promo-card__text">
+                Join us on the final Saturday of each month as renowned guest celebrity chefs conduct a live cooking demonstration celebrating Ugandan indigenous foods (Malakwang, steaming Matooke, simsim sesame paste). Every single dish prepared during the live show is freely served to disadvantaged community members.
+              </p>
+              <ul class="fd-promo-card__perks">
+                <li>✓ Live culinary showcase with celebrated guest chefs</li>
+                <li>✓ 100% of hot meals served to disadvantaged community members</li>
+                <li>✓ Free public attendance &bull; Volunteer &amp; sponsor slots open</li>
+              </ul>
+            </div>
+            <div class="fd-promo-card__actions">
+              <button type="button" class="fd-btn fd-btn--chef" data-open-program="chef">
+                RSVP / Volunteer / Support Show →
+              </button>
+              <span class="fd-promo-card__note">Next Event: Final Saturday of this month, 10:30 AM</span>
+            </div>
+          </article>
+
+          <!-- 3. School-Going Healthy Snack Delivery Program Card -->
+          <article class="fd-promo-card fd-promo-card--school">
+            <div class="fd-promo-card__top">
+              <span class="fd-ribbon-tag">🎒 5KM SCHOOL DELIVERY RADIUS</span>
+              <span class="fd-live-pill fd-live-pill--blue">Pre-ordered Packs</span>
+            </div>
+            <div class="fd-promo-card__body">
+              <div class="fd-promo-card__header-flex">
+                <div class="fd-promo-card__icon" aria-hidden="true">🍎</div>
+                <div>
+                  <h3 class="fd-promo-card__title">School Healthy Snack Delivery</h3>
+                  <p class="fd-promo-card__tagline">Replacing processed junk &amp; crisps with fresh farm nourishment</p>
+                </div>
+              </div>
+              <p class="fd-promo-card__text">
+                Parents can pre-order agreed custom healthy snack packages, and Dek Mit delivers them hygienically packed and chilled directly to schools within a 5km radius before morning break!
+              </p>
+
+              <!-- Food Swap Visual Component -->
+              <div class="fd-swap-box">
+                <div class="fd-swap-item fd-swap-item--out">
+                  <span class="fd-swap-badge">REPLACE ✕</span>
+                  <span>Fried crisps, biscuits &amp; artificial juice</span>
+                </div>
+                <div class="fd-swap-arrow" aria-hidden="true">➔</div>
+                <div class="fd-swap-item fd-swap-item--in">
+                  <span class="fd-swap-badge">WITH DEK MIT ✓</span>
+                  <span>Cold-pressed juice, fresh fruit cups &amp; simsim</span>
+                </div>
+              </div>
+
+              <ul class="fd-promo-card__perks">
+                <li>✓ Cold, hygienic delivery direct to school offices</li>
+                <li>✓ Zero refined sugars, preservatives, or artificial food dyes</li>
+                <li>✓ Flexible daily, weekly, or term-long parent plans</li>
+              </ul>
+            </div>
+            <div class="fd-promo-card__actions">
+              <button type="button" class="fd-btn fd-btn--school" data-open-program="school">
+                Enroll Your Child / School →
+              </button>
+              <span class="fd-promo-card__note">Delivering within 5km of Kampala Central, Kololo, Nakasero &amp; Naguru</span>
+            </div>
+          </article>
+
+          <!-- 4. Certified Nutritionist Personalized Meal Plan Card -->
+          <article class="fd-promo-card fd-promo-card--nutritionist">
+            <div class="fd-promo-card__top">
+              <span class="fd-ribbon-tag">🥗 REGISTERED MEMBER SUBSCRIPTION</span>
+              <span class="fd-live-pill fd-live-pill--green">1-on-1 Clinical Care</span>
+            </div>
+            <div class="fd-promo-card__body">
+              <div class="fd-promo-card__header-flex">
+                <div class="fd-promo-card__icon" aria-hidden="true">🩺</div>
+                <div>
+                  <h3 class="fd-promo-card__title">Personalized Nutritionist Meal Plans</h3>
+                  <p class="fd-promo-card__tagline">Tailored menus with scheduled doorstep ingredient delivery</p>
+                </div>
+              </div>
+              <p class="fd-promo-card__text">
+                Consult with Dek Mit's in-house certified nutritionist to establish a clinical or wellness dietary plan tailored to your health goals (diabetic-friendly, low-sodium, hypertension, prenatal, weight management, or child growth). We curate your weekly menu and automatically deliver fresh pre-portioned ingredients straight to your door.
+              </p>
+              <ul class="fd-promo-card__perks">
+                <li>✓ 1-on-1 personalized dietary assessment &amp; menu planning</li>
+                <li>✓ Custom weekly rotational recipes with cooking guidelines</li>
+                <li>✓ Scheduled bi-weekly or weekly deliveries to registered members</li>
+                <li>✓ Exclusive registered member pricing &amp; priority packing</li>
+              </ul>
+            </div>
+            <div class="fd-promo-card__actions">
+              <button type="button" class="fd-btn fd-btn--nutritionist" data-open-program="nutritionist">
+                Consult Nutritionist &amp; Subscribe →
+              </button>
+              <span class="fd-promo-card__note">Available for home delivery across Greater Kampala</span>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -707,6 +875,82 @@
         <span style="font-size:0.78rem;color:var(--fd-text-muted);" id="lastPriceUpdateLabel">All changes save automatically to your browser</span>
         <button type="button" class="fd-btn fd-btn--green" data-close-dialog="marginDialog">Save &amp; Close</button>
       </footer>
+    </div>
+  </dialog>
+
+  <!-- 6. PROGRAM ENROLLMENT & INQUIRY MODAL -->
+  <dialog id="programModal" class="fd-modal fd-modal--center" closedby="any" aria-labelledby="programModalTitle">
+    <div class="fd-modal__content fd-modal__content--form">
+      <header class="fd-modal__header">
+        <div>
+          <span class="fd-eyebrow fd-eyebrow--promo">🌱 DEK MIT COMMUNITY &amp; WELLNESS</span>
+          <h2 id="programModalTitle" class="fd-modal__title">Program Enrollment &amp; Inquiries</h2>
+          <p class="fd-modal__subtitle" id="programModalSubtitle">Sign up for school snacks, nutritionist meal plans, chef demo RSVPs, or Wednesday alerts.</p>
+        </div>
+        <button type="button" class="fd-modal__close" data-close-dialog="programModal" aria-label="Close dialog">✕</button>
+      </header>
+
+      <div class="fd-modal__body">
+        <form id="programForm" class="fd-program-form">
+          <div class="fd-form-group">
+            <label for="programSelect" class="fd-form-label">Select Program <span class="fd-req">*</span></label>
+            <select id="programSelect" class="fd-form-select" required>
+              <option value="school">🎒 School-Going Healthy Snack Delivery (within 5km)</option>
+              <option value="nutritionist">🥗 Personalized Nutritionist Meal Plan &amp; Home Delivery</option>
+              <option value="chef">🍳 Celebrity Chef Community Cooking Show (RSVP / Volunteer)</option>
+              <option value="wednesday">⚡ Wednesday 50% Off Market Day Reminders &amp; Alerts</option>
+            </select>
+          </div>
+
+          <div class="fd-form-row">
+            <div class="fd-form-group">
+              <label for="progFullName" class="fd-form-label">Full Name <span class="fd-req">*</span></label>
+              <input type="text" id="progFullName" class="fd-form-input" placeholder="e.g. Sarah Namubiru" required autocomplete="name">
+            </div>
+            <div class="fd-form-group">
+              <label for="progPhone" class="fd-form-label">WhatsApp / Phone Number <span class="fd-req">*</span></label>
+              <input type="tel" id="progPhone" class="fd-form-input" placeholder="e.g. +256 772 123456" required autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="fd-form-group" id="progLocationGroup">
+            <label for="progLocation" class="fd-form-label" id="progLocationLabel">Delivery Location / School Name <span class="fd-req">*</span></label>
+            <input type="text" id="progLocation" class="fd-form-input" placeholder="e.g. Kampala Parents School (Naguru) or Home in Kololo" required>
+            <small class="fd-form-hint" id="progLocationHint">For school snacks: delivery available within 5km radius of Kampala Central/Naguru.</small>
+          </div>
+
+          <div class="fd-form-group">
+            <label for="progNotes" class="fd-form-label" id="progNotesLabel">Custom Preferences, Dietary Needs or Goals</label>
+            <textarea id="progNotes" class="fd-form-textarea" rows="3" placeholder="Tell us about allergies, preferred snack combos (e.g. passion juice + fruit cup), family size, or health targets..."></textarea>
+          </div>
+
+          <div class="fd-form-summary-box" id="progSummaryBox">
+            <!-- Dynamically populated program details -->
+          </div>
+
+          <div class="fd-form-actions">
+            <button type="submit" class="fd-btn fd-btn--green fd-btn--full">
+              📲 Submit &amp; Connect with Coordinator via WhatsApp
+            </button>
+          </div>
+        </form>
+
+        <div id="progSuccessBox" class="fd-prog-success" hidden>
+          <div class="fd-prog-success__icon" aria-hidden="true">🎉</div>
+          <h3 class="fd-prog-success__title">Enrollment Request Prepared!</h3>
+          <p class="fd-prog-success__desc" id="progSuccessMessage">
+            We have prepared your program inquiry. Click below to send the details directly to our Dek Mit coordinator on WhatsApp for instant confirmation.
+          </p>
+          <div class="fd-prog-success__actions">
+            <a id="progWhatsAppLink" href="#" target="_blank" rel="noopener noreferrer" class="fd-btn fd-btn--orange">
+              💬 Open in WhatsApp &amp; Confirm
+            </a>
+            <button type="button" class="fd-btn fd-btn--outline-sm" id="progResetFormBtn">
+              Submit Another Inquiry
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </dialog>
 

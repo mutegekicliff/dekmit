@@ -20,7 +20,8 @@
     cart: JSON.parse(localStorage.getItem('dekmit_cart') || '{}'),
     favorites: JSON.parse(localStorage.getItem('dekmit_favs') || '[]'),
     location: localStorage.getItem('dekmit_loc') || 'Kampala — Kololo / Nakasero',
-    timeSlot: localStorage.getItem('dekmit_slot') || 'Today, 2:00 PM – 4:00 PM'
+    timeSlot: localStorage.getItem('dekmit_slot') || 'Today, 2:00 PM – 4:00 PM',
+    wednesdayOverride: localStorage.getItem('dekmit_wednesday_override') === 'true'
   };
 
   // Apply any persisted local price or stock overrides on boot
@@ -131,13 +132,49 @@
   const quickPriceTableBody = document.getElementById('quickPriceTableBody');
   const toastContainer = document.getElementById('toastContainer');
 
+  // Dek Mit Promotions & Programs DOM References
+  const quickPromoTopBtn = document.getElementById('quickPromoTopBtn');
+  const promotionsSection = document.getElementById('promotionsSection');
+  const wednesdayLiveStatus = document.getElementById('wednesdayLiveStatus');
+  const toggleWednesdayPreviewBtn = document.getElementById('toggleWednesdayPreviewBtn');
+  const wednesdayToggleText = document.getElementById('wednesdayToggleText');
+
+  const programModal = document.getElementById('programModal');
+  const programModalTitle = document.getElementById('programModalTitle');
+  const programModalSubtitle = document.getElementById('programModalSubtitle');
+  const programSelect = document.getElementById('programSelect');
+  const progFullName = document.getElementById('progFullName');
+  const progPhone = document.getElementById('progPhone');
+  const progLocationLabel = document.getElementById('progLocationLabel');
+  const progLocation = document.getElementById('progLocation');
+  const progLocationHint = document.getElementById('progLocationHint');
+  const progNotesLabel = document.getElementById('progNotesLabel');
+  const progNotes = document.getElementById('progNotes');
+  const progSummaryBox = document.getElementById('progSummaryBox');
+  const programForm = document.getElementById('programForm');
+  const progSuccessBox = document.getElementById('progSuccessBox');
+  const progSuccessMessage = document.getElementById('progSuccessMessage');
+  const progWhatsAppLink = document.getElementById('progWhatsAppLink');
+  const progResetFormBtn = document.getElementById('progResetFormBtn');
+
   // Currency Formatter
   function formatUGX(amount) {
     return 'UGX ' + Math.round(amount).toLocaleString('en-UG');
   }
 
-  // Active Selling Price Calculation
-  function getProductPrice(product) {
+  // Live Wednesday Half-Day Market Detector (Every Wednesday 8:00 AM – 1:00 PM)
+  function isWednesdayHalfDay() {
+    const now = new Date();
+    // Wednesday is day 3 in JS getDay() (Sunday=0, Monday=1, Tuesday=2, Wednesday=3)
+    return now.getDay() === 3 && now.getHours() >= 8 && now.getHours() < 13;
+  }
+
+  function isWednesdayDiscountActive() {
+    return Boolean(state.wednesdayOverride || isWednesdayHalfDay());
+  }
+
+  // Base Retail / Sourced Price before Wednesday discounts
+  function getProductBasePrice(product) {
     if (!product) return 0;
     if (state.pricingMode === 'smart') {
       return product.proposedPrice || product.price;
@@ -147,6 +184,16 @@
       return Math.round(raw / 100) * 100;
     }
     return product.price;
+  }
+
+  // Active Selling Price Calculation (with 50% discount on Wednesday half-day)
+  function getProductPrice(product) {
+    if (!product) return 0;
+    const base = getProductBasePrice(product);
+    if (isWednesdayDiscountActive()) {
+      return Math.max(500, Math.round((base * 0.5) / 100) * 100);
+    }
+    return base;
   }
 
   function updateHeaderPricingLabel() {
@@ -278,6 +325,22 @@
       actionHtml = `<button type="button" class="fd-add-btn" data-qty-action="inc" data-code="${p.code}">+ Add</button>`;
     }
 
+    const basePrice = getProductBasePrice(p);
+    const isWed = isWednesdayDiscountActive();
+    const priceDisplayHtml = isWed
+      ? `<div class="fd-card__price-box">
+          <div class="fd-card__price-main">
+            <span class="fd-card__price-orig">${formatUGX(basePrice)}</span>
+            <span class="fd-card__price fd-card__price--sale">${formatUGX(sellPrice)}</span>
+            <span class="fd-card__unit-sub">/${p.uom}</span>
+          </div>
+          <span class="fd-tag-wed-sale">50% WED</span>
+        </div>`
+      : `<div>
+          <span class="fd-card__price">${formatUGX(sellPrice)}</span>
+          <span class="fd-card__unit-sub">/${p.uom}</span>
+        </div>`;
+
     return `
       <article class="fd-card ${isNew ? 'fd-card--new' : ''} ${isOut ? 'fd-card--out' : ''}" data-product-code="${p.code}">
         <div>
@@ -306,10 +369,7 @@
         </div>
 
         <div class="fd-card__footer">
-          <div>
-            <span class="fd-card__price">${formatUGX(sellPrice)}</span>
-            <span class="fd-card__unit-sub">/${p.uom}</span>
-          </div>
+          ${priceDisplayHtml}
           ${actionHtml}
         </div>
       </article>
@@ -501,6 +561,8 @@
         .map((p) => {
           const qty = state.cart[p.code] || 0;
           const sellPrice = getProductPrice(p);
+          const basePrice = getProductBasePrice(p);
+          const isWed = isWednesdayDiscountActive();
           const isNew = p.status === 'NEW';
           const isOut = p.stockStatus === 'Out of Stock';
           const thumbHtml = p.image
@@ -518,7 +580,13 @@
               <td>${p.uom}</td>
               <td>${formatUGX(p.sourcingCost || p.price * 0.8)}</td>
               <td>${p.wastagePct || 5}% / ${p.grossMarginPct || 20}%</td>
-              <td><strong>${formatUGX(sellPrice)}</strong></td>
+              <td>
+                ${
+                  isWed
+                    ? `<span class="fd-card__price-orig">${formatUGX(basePrice)}</span><br><strong style="color:var(--fd-orange-cta);">${formatUGX(sellPrice)}</strong> <span class="fd-tag-wed-sale">50% OFF</span>`
+                    : `<strong>${formatUGX(sellPrice)}</strong>`
+                }
+              </td>
               <td>
                 ${
                   isOut
@@ -876,8 +944,119 @@
     return updatedCount;
   }
 
+  // ==========================================================================
+  // Dek Mit Community Programs & Promotions Logic
+  // ==========================================================================
+
+  const programConfigs = {
+    school: {
+      title: 'School-Going Healthy Snack Delivery',
+      subtitle: 'Hygienic fresh fruit cups, cold-pressed juices & wholesome snacks delivered directly to schools (within 5km)',
+      summary: '🍎 <strong>Program Highlights:</strong> Pre-ordered custom snack packages replacing crisps and manufactured juices with cold-pressed natural juice, freshly sliced seasonal fruit cups, and roasted simsim snacks. Delivered chilled every morning before break time to schools within 5km of Kampala Central/Naguru.',
+      locationLabel: 'School Name, Campus & Child Grade',
+      locationPlaceholder: 'e.g. Kampala Parents School (Naguru) – Grade 4',
+      locationHint: 'Delivered directly to school administration every morning within a 5km radius.',
+      notesLabel: 'Child Allergies, Preferences & Weekly Schedule',
+      notesPlaceholder: 'e.g. Loves mango & passion juice, allergic to peanuts. Deliver Monday, Wednesday, Friday.'
+    },
+    nutritionist: {
+      title: 'Personalized Nutritionist Meal Plan & Delivery',
+      subtitle: '1-on-1 clinical nutrition consultations with scheduled doorstep deliveries for registered members',
+      summary: '🥗 <strong>Program Highlights:</strong> Certified clinical nutritionist designs a personalized 7 or 14-day rotational dietary blueprint for your family (diabetes, hypertension, prenatal care, fitness, child growth). Pre-portioned fresh ingredients delivered to your doorstep on a recurring schedule with member savings.',
+      locationLabel: 'Home Delivery Address & Area in Greater Kampala',
+      locationPlaceholder: 'e.g. Plot 14, Prince Charles Drive, Kololo, Kampala',
+      locationHint: 'Frequent recurring deliveries to registered member homes across Greater Kampala.',
+      notesLabel: 'Health Targets, Dietary Restrictions & Family Size',
+      notesPlaceholder: 'e.g. Low sodium for hypertension, family of 4. Need bi-weekly leafy greens (Nakati, Sukuma), tilapia and beans.'
+    },
+    chef: {
+      title: 'Celebrity Chef Cooking Demo & Community Kitchen',
+      subtitle: 'Live culinary demonstrations feeding vulnerable community members on the last Saturday of every month',
+      summary: '🍳 <strong>Program Highlights:</strong> Renowned guest celebrity chefs cook live indigenous Ugandan dishes (Malakwang, steaming Matooke, sesame greens). 100% of freshly prepared meals are served freely to disadvantaged community members. Free public RSVP, volunteer slots, and ingredient sponsorship available.',
+      locationLabel: 'Your Residential Area / Organization',
+      locationPlaceholder: 'e.g. Resident in Nakasero or volunteer coordinator with local NGO',
+      locationHint: 'Held on the last Saturday of every month at 10:30 AM at Dek Mit Hub.',
+      notesLabel: 'Participation Details (RSVP / Volunteer / Donate)',
+      notesPlaceholder: 'e.g. RSVP for 2 attendees / Want to volunteer in meal serving / Want to sponsor 50 community meals.'
+    },
+    wednesday: {
+      title: 'Wednesday 50% Off Market Day Reminders & Orders',
+      subtitle: 'Receive early WhatsApp alerts and reserve peak-ripe market food at 50% discount',
+      summary: '⚡ <strong>Program Highlights:</strong> Every Wednesday 8:00 AM – 1:00 PM is a half-day market day. Food and farm-fresh produce are sold at 50% discount to cut waste and support families. Subscribe for early 7:30 AM item alerts and pre-reserve high-demand bundles.',
+      locationLabel: 'Preferred Delivery Area or Pickup Location',
+      locationPlaceholder: 'e.g. Delivery to Ntinda or in-person pickup at Dek Mit Hub',
+      locationHint: 'Wednesday 50% discount runs from 8:00 AM to 1:00 PM every Wednesday.',
+      notesLabel: 'Target Produce / Bulk Items for Wednesday',
+      notesPlaceholder: 'e.g. Bulk tomatoes, ripe mangoes for batch juicing, beef cuts, matooke for the week.'
+    }
+  };
+
+  function updateProgramModalFields(progKey) {
+    const cfg = programConfigs[progKey] || programConfigs.school;
+    if (programModalTitle) programModalTitle.textContent = cfg.title;
+    if (programModalSubtitle) programModalSubtitle.textContent = cfg.subtitle;
+    if (progLocationLabel) progLocationLabel.innerHTML = `${cfg.locationLabel} <span class="fd-req">*</span>`;
+    if (progLocation) progLocation.placeholder = cfg.locationPlaceholder;
+    if (progLocationHint) progLocationHint.textContent = cfg.locationHint;
+    if (progNotesLabel) progNotesLabel.textContent = cfg.notesLabel;
+    if (progNotes) progNotes.placeholder = cfg.notesPlaceholder;
+    if (progSummaryBox) progSummaryBox.innerHTML = cfg.summary;
+  }
+
+  function openProgramModal(progKey = 'school') {
+    if (!programModal) return;
+    if (programSelect) programSelect.value = progKey;
+    updateProgramModalFields(progKey);
+    if (programForm) programForm.hidden = false;
+    if (progSuccessBox) progSuccessBox.hidden = true;
+    programModal.showModal();
+  }
+
+  function scrollToPromotions() {
+    if (state.dept !== 'home') {
+      state.dept = 'home';
+      state.sectionCode = 'all';
+      state.search = '';
+      if (searchInput) searchInput.value = '';
+      if (clearSearchBtn) clearSearchBtn.hidden = true;
+      if (deptNavBar) {
+        deptNavBar.querySelectorAll('.fd-dept-link').forEach((b) => b.classList.toggle('is-active', b.dataset.dept === 'promotions'));
+      }
+      renderAll();
+    }
+    if (promotionsSection) {
+      promotionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      promotionsSection.classList.add('is-highlighted');
+      setTimeout(() => promotionsSection.classList.remove('is-highlighted'), 2000);
+    }
+  }
+
+  function updateWednesdayUI() {
+    if (!wednesdayLiveStatus || !wednesdayToggleText) return;
+    const isWed = isWednesdayHalfDay();
+    const isActive = isWednesdayDiscountActive();
+
+    if (isWed) {
+      wednesdayLiveStatus.textContent = '🟢 ACTIVE TODAY (8 AM – 1 PM)';
+      wednesdayLiveStatus.className = 'fd-live-pill is-active';
+    } else if (state.wednesdayOverride) {
+      wednesdayLiveStatus.textContent = '⚡ 50% Preview Active';
+      wednesdayLiveStatus.className = 'fd-live-pill is-active';
+    } else {
+      wednesdayLiveStatus.textContent = 'Next: Wednesday 8 AM';
+      wednesdayLiveStatus.className = 'fd-live-pill';
+    }
+
+    if (isActive) {
+      wednesdayToggleText.textContent = '✓ 50% Active (Click to Revert)';
+    } else {
+      wednesdayToggleText.textContent = 'Preview 50% Market Prices';
+    }
+  }
+
   function renderAll() {
     updateHeaderPricingLabel();
+    updateWednesdayUI();
     renderHomeCarousels();
     renderSidebarAisles();
     renderCatalogue();
@@ -920,7 +1099,12 @@
     deptNavBar.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-dept]');
       if (!btn) return;
-      state.dept = btn.dataset.dept;
+      const dept = btn.dataset.dept;
+      if (dept === 'promotions') {
+        scrollToPromotions();
+        return;
+      }
+      state.dept = dept;
       state.sectionCode = 'all';
       favoritesFilterBtn.classList.remove('is-active');
       deptNavBar.querySelectorAll('.fd-dept-link').forEach((b) => b.classList.toggle('is-active', b === btn));
@@ -1064,6 +1248,13 @@
         deptNavBar.querySelectorAll('.fd-dept-link').forEach((b) => b.classList.toggle('is-active', b.dataset.dept === 'new_arrivals'));
         renderAll();
         aisleCatalogueSection.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      const openProgBtn = e.target.closest('[data-open-program]');
+      if (openProgBtn) {
+        openProgramModal(openProgBtn.dataset.openProgram);
+        return;
       }
     });
 
@@ -1074,6 +1265,67 @@
       renderAll();
       aisleCatalogueSection.scrollIntoView({ behavior: 'smooth' });
     });
+
+    if (quickPromoTopBtn) {
+      quickPromoTopBtn.addEventListener('click', scrollToPromotions);
+    }
+
+    if (toggleWednesdayPreviewBtn) {
+      toggleWednesdayPreviewBtn.addEventListener('click', () => {
+        state.wednesdayOverride = !state.wednesdayOverride;
+        localStorage.setItem('dekmit_wednesday_override', String(state.wednesdayOverride));
+        updateWednesdayUI();
+        renderAll();
+        if (state.wednesdayOverride) {
+          showToast('⚡ Wednesday 50% Market Day discount applied across all 247 items!');
+        } else {
+          showToast('Standard catalogue pricing restored.');
+        }
+      });
+    }
+
+    if (programSelect) {
+      programSelect.addEventListener('change', (e) => {
+        updateProgramModalFields(e.target.value);
+      });
+    }
+
+    if (programForm) {
+      programForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const progType = programSelect.value;
+        const progName = progFullName.value.trim();
+        const progPh = progPhone.value.trim();
+        const progLoc = progLocation.value.trim();
+        const progN = progNotes.value.trim();
+        const typeTitle = (programConfigs[progType] || {}).title || progType;
+
+        const msg =
+          `*Dek Mit Program Inquiry: ${typeTitle}*\n\n` +
+          `👤 *Name:* ${progName}\n` +
+          `📞 *Phone/WhatsApp:* ${progPh}\n` +
+          `📍 *Location/School:* ${progLoc}\n` +
+          (progN ? `📝 *Notes/Goals:* ${progN}\n` : '') +
+          `\n_Sent via Dek Mit Direct Online Storefront_`;
+
+        const waUrl = `https://wa.me/256700000000?text=${encodeURIComponent(msg)}`;
+        if (progWhatsAppLink) progWhatsAppLink.href = waUrl;
+        if (programForm) programForm.hidden = true;
+        if (progSuccessBox) progSuccessBox.hidden = false;
+        showToast(`Inquiry for ${typeTitle} prepared!`);
+      });
+    }
+
+    if (progResetFormBtn) {
+      progResetFormBtn.addEventListener('click', () => {
+        if (programForm) {
+          programForm.reset();
+          programForm.hidden = false;
+        }
+        if (progSuccessBox) progSuccessBox.hidden = true;
+        updateProgramModalFields(programSelect.value);
+      });
+    }
 
     // Cart Modal & Checkout
     openCartBtn.addEventListener('click', () => {
