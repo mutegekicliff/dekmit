@@ -65,89 +65,90 @@ body {
   padding-inline: 1.25rem;
 }
 
-/* 1. FreshDirect Top Utility & Delivery Slot Bar */
-.fd-utility-bar {
-  background-color: var(--fd-green-dark);
-  color: #ffffff;
-  font-size: 0.8rem;
-  padding-block: 0.42rem;
-}
-
-.fd-utility-bar__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.fd-slot-pill {
+/* Delivery Slot Header Button (Integrated in Main Header) */
+.fd-header-slot-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--fd-radius-pill);
+  gap: 0.65rem;
+  background: var(--fd-green-tint);
+  border: 1px solid rgba(0, 104, 55, 0.2);
+  color: var(--fd-text-main);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--fd-radius-sm);
   font-family: inherit;
-  font-size: 0.79rem;
   cursor: pointer;
-  transition: background 0.15s;
+  text-align: left;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
 }
 
-.fd-slot-pill:hover {
-  background: rgba(255, 255, 255, 0.22);
+.fd-header-slot-btn:hover {
+  background: #def7e5;
+  border-color: var(--fd-green-primary);
+  box-shadow: 0 2px 8px rgba(0, 104, 55, 0.12);
 }
 
-.fd-slot-pill__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #4ade80;
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
+.fd-header-slot-btn__icon {
+  color: var(--fd-green-primary);
+  display: grid;
+  place-items: center;
 }
 
-.fd-slot-pill__divider {
-  opacity: 0.4;
-}
-
-.fd-slot-pill__change {
-  color: #fde68a;
-  font-weight: 700;
-  margin-left: 0.25rem;
-}
-
-.fd-utility-right {
+.fd-header-slot-btn__text {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  line-height: 1.2;
 }
 
-.fd-utility-promo {
-  color: #dcfce7;
+.fd-header-slot-btn__location {
+  font-size: 0.7rem;
+  color: var(--fd-text-muted);
+}
+
+.fd-header-slot-btn__location strong {
+  color: var(--fd-text-main);
+  font-weight: 700;
+}
+
+.fd-header-slot-btn__slot {
+  font-size: 0.78rem;
+  color: var(--fd-green-primary);
+  font-weight: 700;
 }
 
 @media (max-width: 900px) {
-  .fd-utility-promo {
-    display: none;
+  .fd-header-slot-btn {
+    order: 3;
+    width: 100%;
+    justify-content: center;
   }
 }
 
-.fd-utility-link {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #fff;
-  padding: 0.2rem 0.65rem;
-  border-radius: var(--fd-radius-pill);
+/* Pricing Pill in Catalogue Toolbar */
+.fd-pricing-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #f8fafc;
+  border: 1px solid var(--fd-border-strong);
+  color: #334155;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--fd-radius-sm);
   font-family: inherit;
-  font-size: 0.76rem;
+  font-size: 0.82rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.fd-utility-link:hover {
-  background: rgba(255, 255, 255, 0.22);
+.fd-pricing-pill-btn:hover {
+  background: #ffffff;
+  border-color: var(--fd-green-primary);
+  color: var(--fd-green-primary);
+}
+
+.fd-pricing-pill-btn svg {
+  color: var(--fd-green-primary);
 }
 
 /* 2. Sticky FreshDirect Header */

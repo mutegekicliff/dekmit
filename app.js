@@ -1280,7 +1280,7 @@
       }
     });
 
-    document.getElementById('quickFilterNewTopBtn').addEventListener('click', () => {
+    document.getElementById('quickFilterNewTopBtn')?.addEventListener('click', () => {
       state.dept = 'new_arrivals';
       state.sectionCode = 'all';
       deptNavBar.querySelectorAll('.fd-dept-link').forEach((b) => b.classList.toggle('is-active', b.dataset.dept === 'new_arrivals'));
@@ -1473,7 +1473,7 @@
       renderQuickPriceTable();
       marginDialog.showModal();
     }
-    pricingToggleBtn.addEventListener('click', openMarginModal);
+    pricingToggleBtn?.addEventListener('click', openMarginModal);
     document.getElementById('footerMarginBtn').addEventListener('click', openMarginModal);
 
     document.querySelectorAll('input[name="pricingMode"]').forEach((radio) => {
